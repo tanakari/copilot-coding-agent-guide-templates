@@ -1,0 +1,71 @@
+# メンバーマップ - 日本版
+
+## 概要
+
+このアプリケーションは、登録したメンバー情報を日本地図上に表示するWebアプリケーションです。
+アプリケーションはAI駆動で開発しています。
+
+## 主な機能
+
+- メンバー情報の登録・更新・削除
+- メンバー情報の一覧表示
+- 日本地図上へのメンバー情報の表示
+
+## アーキテクチャ・技術
+
+### アーキテクチャ
+
+- ドメイン駆動
+
+### 技術
+
+- Java 25
+- Spring Boot 3.5.x
+- Thymeleaf
+- Spring Data JPA
+- Maven
+- PostgreSQL
+
+詳細な技術スタックは [docs/stack.md](./docs/stack.md) を参照してください。
+
+## セットアップ
+
+セットアップ手順は [SETUP.md](./SETUP.md) を参照してください。
+
+### クイックスタート
+
+```bash
+# リポジトリクローン
+git clone https://github.com/tanakari/member-map-jp.git
+cd member-map-jp
+
+# 環境設定
+cp .env.example .env
+# .envファイルを編集
+
+# 依存関係インストール & 起動
+mvn clean install
+mvn spring-boot:run
+```
+
+## ディレクトリ構成
+
+```
+member-map-jp/
+├── .github/              # GitHub設定（Issue/PRテンプレート）
+├── docs/                 # 各種ドキュメント
+├── instructions/         # 開発手順書
+├── specs/                # 仕様書
+│   ├── api/             # API仕様書
+│   └── ui/              # 画面仕様書
+├── src/                  # ソースコード
+│   ├── main/
+│   │   ├── java/        # Javaソースコード
+│   │   └── resources/   # リソースファイル
+│   └── test/            # テストコード
+├── pom.xml              # Maven設定ファイル
+├── INSTRUCTIONS.md       # 開発手順書の目次
+├── SPEC.md              # 仕様書の目次
+├── SETUP.md             # セットアップガイド
+└── README.md            # このファイル
+```

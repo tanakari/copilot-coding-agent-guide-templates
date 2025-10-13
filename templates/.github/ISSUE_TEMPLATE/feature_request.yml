@@ -1,0 +1,58 @@
+name: 機能追加リクエスト
+description: 新しい機能や改善点の提案はこちらから
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分類
+      description: この機能がどの分類に該当するかを選択してください
+      options:
+        - 画面（フロントエンド）
+        - API（バックエンド）
+        - 画面-API連携
+        - 設計・ドキュメント
+    validations:
+      required: true
+
+  - type: input
+    id: summary
+    attributes:
+      label: 概要
+      description: どんな機能を追加したいか、簡潔に記入してください
+      placeholder: 例) SPEC.mdの○○機能の追加、ユーザー検索機能の追加
+    validations:
+      required: true
+
+  - type: textarea
+    id: background
+    attributes:
+      label: 目的・背景
+      description: なぜこの機能が必要か、背景や目的を詳しく記入してください
+      placeholder: 例) ユーザーの利便性向上のため
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: 完了条件
+      description: このIssueが完了となる条件を明確に記入してください
+      placeholder: 例) 検索結果が画面上に正しく表示される
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: reference
+    attributes:
+      label: 参照
+      description: 下記ファイルを必ず確認してください
+      options:
+        - label: INSTRUCTIONS.mdを確認しました
+        - label: README.mdを確認しました
+
+  - type: markdown
+    attributes:
+      value: |
+        不明点はコメント欄で質問してください。

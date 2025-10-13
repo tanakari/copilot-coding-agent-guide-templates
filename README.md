@@ -1,1 +1,0 @@
-# copilot-coding-agent-guide-templates

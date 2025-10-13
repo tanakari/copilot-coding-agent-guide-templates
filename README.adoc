@@ -1,0 +1,466 @@
+:toc: left
+:toc-levels: 3
+:toc-title: 目次
+:sectnums:
+:source-highlighter: highlightjs
+:icons: font
+
+= GitHub Copilot コーディングエージェント ユーザーガイド & テンプレート
+
+== はじめに
+
+このドキュメントでは、GitHub Copilot コーディングエージェントを使用したAI駆動開発の手法について説明します。
+
+GitHub Copilot コーディングエージェントは、AIを活用してコードの提案・実装を行い、開発者の生産性を大幅に向上させるツールです。
+簡単に言うと、*IssueにCopilotをアサインすると、Copilotが自動的にコードを実装してPull Requestを作成します*。
+
+本リポジトリの `templates/` ディレクトリには、AI駆動開発を始めるために必要なテンプレートファイルとサンプルを配置しています。
+
+[TIP]
+====
+AI駆動開発では、適切なドキュメント整備がAIの性能を大きく左右します。
+このガイドに従って環境を整備することで、効果的なAI開発パートナーシップを構築できます。
+====
+
+== 前提条件
+
+* GitHubアカウントを持っていること
+* 基本的なGitの操作知識があること
+* プログラミングの基礎知識があること
+
+== 全体フロー
+
+本ガイドでは、以下の3つのステップでAI駆動開発環境を構築します：
+
+[cols="1,3,6"]
+|===
+|ステップ |作業内容 |説明
+
+|1 |<<利用設定,利用設定>>
+|GitHub Copilot のサブスクリプション登録とコーディングエージェントの有効化
+
+|2 |<<AI駆動開発準備,AI駆動開発準備>>
+|AIが効果的に動作するためのドキュメント・テンプレートの整備
+
+|3 |<<AI駆動開発,AI駆動開発>>
+|実際のAI駆動開発の実践
+|===
+
+== 利用設定
+
+=== GitHub Copilotのサブスクリプション登録
+
+GitHub Copilot コーディングエージェントを使用するには、*Copilot コーディングエージェント*が利用可能なプランに登録する必要があります。
+本ガイドでは *Copilot Pro* を利用します。
+
+==== 登録手順
+
+[cols="1,9"]
+|===
+|手順 |操作内容
+
+|1
+|*GitHubにログイン* +
+https://github.com にアクセスし、右上の *Sign in* をクリックしてログインします。
+
+|2
+|*Copilotの申込ページを開く* +
+画面右上のプロフィールアイコン → *Settings* → 左側メニューの *Copilot* → *Get Copilot* または *Start free trial* をクリック
+
+|3
+|*プランの選択* +
+提示されるプランから *Copilot Pro* を選択します。
+
+|4
+|*支払い情報を入力* +
+クレジットカードまたはGitHubが対応する決済方法と請求先住所を入力します。 +
+日本の住所入力例は、欄外のTable「日本の住所入力例」を参照してください。
+
+|5
+|*登録完了の確認* +
+*Confirm* をクリックして申し込みを確定します。完了画面に "GitHub Copilot has been activated" と表示され、確認メールが届きます。
+|===
+
+.日本の住所入力例
+[cols="2,4,3", options="header"]
+|===
+|項目 |入力内容 |例
+
+|FirstName / LastName
+|クレジットカードに記載されているローマ字氏名
+|TARO YAMADA
+
+|Address Line 1
+|番地・丁目・マンション名などを英語表記で入力
+|1-1-1 Chiyoda, Apt. 101
+
+|City
+|市区町村を英語で入力
+|Chiyoda-ku、Suita-shi
+
+|Country/Region
+|Japan を選択
+|Japan
+
+|Postal Code
+|郵便番号をハイフン付きで入力
+|100-0001
+
+|State/Province
+|都道府県を英語で入力
+|Tokyo、Osaka
+|===
+
+[NOTE]
+====
+日本語住所は https://judress.tsukuenoue.com/ にて英語に変換できます。
+====
+
+=== GitHub Copilot コーディングエージェントを有効にする
+
+[cols="1,9"]
+|===
+|手順 |操作内容
+
+|1
+|*コーディングエージェントの設定を開く* +
+画面右上のプロフィールアイコン → *Settings* → 左側メニューの *Copilot* → *Coding agent* をクリック
+
+|2
+|*対象リポジトリを選択* +
+Repository access を *Only select repositories* に設定し、*Select repositories* ボタンから利用するリポジトリを選択します。
+
+|===
+
+[TIP]
+====
+セキュリティの観点から、*Only select repositories* を選択して必要なリポジトリのみに限定することを推奨します。
+====
+
+== AI駆動開発準備
+
+AI駆動開発を効果的に行うためには、AIが理解しやすい形でプロジェクトの情報を整備する必要があります。
+以下のドキュメントを準備することで、AIのパフォーマンスが大幅に向上します。
+
+=== 準備すべきドキュメント一覧
+
+[cols="1,2,4,3", options="header"]
+|===
+|順序 |ドキュメント |目的 |重要度
+
+|1 |README.md |プロジェクト概要とセットアップ手順 |⭐⭐⭐
+|2 |INSTRUCTIONS.md |AIへの指示とルール |⭐⭐⭐
+|3 |SPEC.md |機能仕様の一覧 |⭐⭐⭐
+|4 |development-flow.md |開発プロセス |⭐⭐
+|5 |conventions.md |コーディング規約 |⭐⭐
+|6 |architecture.md |アーキテクチャ方針 |⭐⭐
+|7 |policies.md |開発ポリシー |⭐
+|8 |prompts-examples.md |AI依頼例 |⭐
+|9 |agent.md |AI作業契約 |⭐
+|10 |Issueテンプレート |Issue作成フォーマット |⭐⭐
+|===
+
+=== ファイル配置先とディレクトリ構造
+
+```
+プロジェクトルート/
+├── README.md                    # プロジェクト概要
+├── INSTRUCTIONS.md              # AI指示書
+├── SPEC.md                      # 仕様書
+├── docs/
+│   ├── development-flow.md      # 開発フロー
+│   ├── conventions.md           # コーディング規約
+│   ├── architecture.md          # アーキテクチャ方針
+│   ├── policies.md              # 開発ポリシー
+│   └── prompts-examples.md      # AI依頼例
+├── instructions/
+│   └── agent.md                 # AI作業契約
+├── specs/
+│   ├── ui/
+│   │   └── *.md                 # UI仕様書
+│   └── api/
+│       └── *.md                 # API仕様書
+└── .github/
+    └── ISSUE_TEMPLATE/
+        ├── feature_request.md   # 機能要望テンプレート
+        └── bug_report.md        # バグ報告テンプレート
+```
+
+=== 各ドキュメントの作成ガイド
+
+==== README.md の作成
+
+プロジェクトの「顔」となる最重要ドキュメントです。
+
+[cols="2,8"]
+|===
+|目的 |プロジェクトの概要、セットアップ手順、基本的な使用方法の説明
+|配置場所 |プロジェクトルート (`/README.md`)
+|参考テンプレート |link:templates/README.md[README.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* プロジェクトの目的と概要
+* 主な機能
+* 技術スタック
+* セットアップ手順
+* 基本的な使用方法
+* 関連ドキュメントへのリンク
+
+==== INSTRUCTIONS.mdの作成
+
+AIエージェントへの指示とプロジェクトルールをまとめた最重要ドキュメントです。
+
+[cols="2,8"]
+|===
+|目的 |AIエージェントへの具体的な指示とルールの提供
+|配置場所 |プロジェクトルート (`/INSTRUCTIONS.md`)
+|参考テンプレート |link:templates/INSTRUCTIONS.md[INSTRUCTIONS.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* AIエージェントの役割と責任範囲
+* コーディングスタイルと命名規則
+* コミットメッセージのフォーマット
+* PRの作成とレビュー手順
+* 使用する技術スタックとフレームワーク
+* テストとデプロイの手順
+
+==== SPEC.mdの作成
+
+実装すべき機能を明確化するためのドキュメントです。
+
+[cols="2,8"]
+|===
+|目的 |機能仕様の概要と詳細仕様書へのリンク
+|配置場所 |プロジェクトルート (`/SPEC.md`)
+|参考テンプレート |link:templates/SPEC.md[SPEC.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* 機能一覧と概要
+* 各機能の詳細仕様書へのリンク
+* 優先度と実装順序
+* 画面遷移図やAPI仕様の概要
+
+
+==== development-flow.mdの作成
+
+Issue作成からマージまでの開発プロセスを定義します。
+
+[cols="2,8"]
+|===
+|目的 |開発プロセスの標準化と効率化
+|配置場所 |`/docs/development-flow.md`
+|参考テンプレート |link:templates/docs/development-flow.md[development-flow.mdサンプル]
+|===
+
+*含めるべき内容:*
+* Issueの作成と管理方法
+* Copilotのアサイン方法
+* コード実装とPR作成の手順
+* PRレビューとマージのフロー
+
+==== conventions.mdの作成
+
+命名規則やコーディングスタイルの統一ルールをまとめます。
+
+[cols="2,8"]
+|===
+|目的 |コードの一貫性と可読性の向上
+|配置場所 |`/docs/conventions.md`
+|参考テンプレート |link:templates/docs/conventions.md[conventions.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* 命名規則 (変数名、関数名、クラス名など)
+* コーディングスタイル (インデント、改行、コメントなど)
+* フォルダ構成とファイル命名ルール
+
+==== architecture.mdの作成
+
+システム設計方針とアーキテクチャパターンをまとめます。
+
+[cols="2,8"]
+|===
+|目的 |システム設計の一貫性と拡張性の確保
+|配置場所 |`/docs/architecture.md`
+|参考テンプレート |link:templates/docs/architecture.md[architecture.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* システム全体のアーキテクチャ概要
+* 各コンポーネントの役割と関係性
+* 使用するアーキテクチャパターン (例: MVC, マイクロサービスなど)
+
+==== policies.mdの作成
+
+開発ポリシー (セキュリティ、品質管理など) をまとめます。
+
+[cols="2,8"]
+|===
+|目的 |開発プロセスの標準化とリスク管理
+|配置場所 |`/docs/policies.md`
+|参考テンプレート |link:templates/docs/policies.md[policies.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* セキュリティポリシー
+* 品質管理ポリシー
+* コードレビューのルール
+* デプロイメントポリシー
+
+==== prompts-examples.mdの作成
+
+AIエージェントへの効果的な依頼例をまとめます。
+
+[cols="2,8"]
+|===
+|目的 |AIエージェントへの具体的な依頼方法を示す
+|配置場所 |`/docs/prompts-examples.md`
+|参考テンプレート |link:templates/docs/prompts-examples.md[prompts-examples.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* 具体的な依頼文の例
+* 依頼時の注意点
+* 効果的なコミュニケーション方法
+
+==== agent.mdの作成
+
+AIエージェントとの作業契約・責任範囲を明確にします。
+
+[cols="2,8"]
+|===
+|目的 |AIエージェントとの作業契約と責任範囲の明確化
+|配置場所 |`/instructions/agent.md`
+|参考テンプレート |link:templates/instructions/agent.md[agent.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* AIエージェントの役割と責任範囲
+* 作業契約の条件
+* 問題発生時の対応方法
+
+==== Issueテンプレートの作成
+
+GitHubのIssue作成時に使用するテンプレートを用意します。
+
+[cols="2,8"]
+
+|===
+|目的 |Issue作成の標準フォーマットを提供し、情報の一貫性を確保
+|配置場所 |`.github/ISSUE_TEMPLATE/` ディレクトリ
+|参考テンプレート |link:templates/.github/ISSUE_TEMPLATE/[Issueテンプレートサンプル]
+|===
+
+*含めるべき内容:*
+* バグ報告テンプレート
+  ** 再現手順
+  ** 期待される動作
+  ** 実際の動作
+  ** 環境情報 (OS、ブラウザ、バージョンなど)
+* 機能要望テンプレート
+  ** 要望の概要
+  ** 利用シナリオ
+  ** 期待される効果
+  ** 優先度
+
+==== ドキュメント作成の注意点
+
+* 各ドキュメントは明確で具体的な内容を心がける
+* AIエージェントが理解しやすいように、専門用語や略語は避ける
+* ドキュメントの整合性を保つため、変更があった場合は関連するすべてのドキュメントを更新する
+
+[WARNING]
+====
+ドキュメントが不十分だと、AIが誤った判断をしてしまう可能性があります。
+特に INSTRUCTIONS.md と SPEC.md は必ず整備してください。
+====
+
+==== 作成順序の推奨
+
+[cols="1,3,6"]
+|===
+|順序 |ドキュメント |作成のポイント
+
+|1 |README.md |プロジェクトの「顔」となるため最初に作成
+|2 |INSTRUCTIONS.md |AIの動作を決める最重要ドキュメント
+|3 |SPEC.md |実装すべき機能を明確化
+|4 |開発フロー |Issue→PR→マージの流れを定義
+|5 |その他ドキュメント |プロジェクトの特性に応じて
+|===
+
+==== テンプレートの活用
+
+すべてのドキュメントのテンプレートは `templates/` ディレクトリに用意されています：
+
+* link:templates/README.md[README.mdテンプレート]
+* link:templates/INSTRUCTIONS.md[INSTRUCTIONS.mdテンプレート] 
+* link:templates/SPEC.md[SPEC.mdテンプレート]
+* link:templates/docs/[docs/配下のテンプレート群]
+* link:templates/.github/ISSUE_TEMPLATE/[Issueテンプレート]
+
+== AI駆動開発の実践
+
+ドキュメントの準備が完了したら、実際にAI駆動開発を開始できます。
+
+=== 開発フロー
+
+```mermaid
+flowchart TD
+    A[開発者: Issue作成依頼] --> B[Copilot: Issue作成]
+    B --> C[開発者: Issue確認・Copilotアサイン]
+    C --> D[Copilot: コード実装]
+    D --> E[Copilot: Pull Request作成]
+    E --> F[開発者: PRレビュー]
+    F --> G{修正必要?}
+    G -->|Yes| H[開発者: フィードバック]
+    H --> I[Copilot: 修正対応]
+    I --> F
+    G -->|No| J[開発者: PRマージ]
+    J --> K[完了]
+```
+
+=== 実際の作業ステップ
+
+==== Step 1: Issue作成依頼
+
+* GitHubのIssueでCopilotに作業を依頼
+* 具体的な要件と完了条件を明記
+* 関連する仕様書やドキュメントを参照
+
+==== Step 2: Copilotによる作業
+
+* Copilotが自動的にコードを実装
+* PRのタイトルが `[WIP]` の間は作業中
+* `[WIP]` が外れたら作業完了
+
+==== Step 3: レビューとフィードバック
+
+* Pull Requestをレビュー
+* 必要に応じてコメントで修正依頼
+* `View session` で作業状況をリアルタイム確認可能
+
+==== Step 4: マージと完了
+
+* 品質確認後にPRをマージ
+* Issueが自動的にクローズ
+
+[TIP]
+====
+*効果的なAI開発のコツ*
+
+* 明確で具体的な指示を心がける
+* 既存のドキュメントを積極的に参照させる
+* 小さな単位でのIssue作成を推奨
+* レビューでは建設的なフィードバックを提供
+====

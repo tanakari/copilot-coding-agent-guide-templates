@@ -1,8 +1,8 @@
-# メンバーマップ - 日本版
+# メンバー管理システム
 
 ## 概要
 
-このアプリケーションは、登録したメンバー情報を日本地図上に表示するWebアプリケーションです。
+このアプリケーションは、メンバー情報を管理するシンプルなWebアプリケーションです。
 アプリケーションはAI駆動で開発しています。
 
 ## 🤖 AIエージェントとの開発
@@ -18,7 +18,7 @@ AIエージェントに依頼する際は、以下のテンプレートをコピ
 ```
 
 **具体例:**
-- `メンバー登録のAPIを実装するIssueを作成してください。仕様: specs/api/members/create.md`
+- `メンバー一覧のAPIを実装するIssueを作成してください。仕様: specs/api/members/list.md`
 - `メンバー一覧画面を実装してください。仕様: specs/ui/member-list.md`
 
 ### その他のよく使う依頼
@@ -32,7 +32,8 @@ AIエージェントに依頼する際は、以下のテンプレートをコピ
 
 - メンバー情報の登録・更新・削除
 - メンバー情報の一覧表示
-- 日本地図上へのメンバー情報の表示
+- メンバー情報の検索機能（名前・メール）
+- ページング機能
 
 ## アーキテクチャ・技術
 
@@ -59,8 +60,8 @@ AIエージェントに依頼する際は、以下のテンプレートをコピ
 
 ```bash
 # リポジトリクローン
-git clone https://github.com/tanakari/member-map-jp.git
-cd member-map-jp
+git clone https://github.com/tanakari/member-management.git
+cd member-management
 
 # 環境設定
 cp .env.example .env
@@ -74,7 +75,7 @@ mvn spring-boot:run
 ## ディレクトリ構成
 
 ```
-member-map-jp/
+member-management/
 ├── .github/              # GitHub設定（Issue/PRテンプレート）
 ├── docs/                 # 各種ドキュメント
 ├── instructions/         # 開発手順書

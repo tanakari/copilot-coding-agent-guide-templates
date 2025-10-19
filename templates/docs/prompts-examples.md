@@ -19,9 +19,9 @@
 
 **例:**
 ```
-メンバー登録のAPIを実装するIssueを作成してください。
+メンバー一覧のAPIを実装するIssueを作成してください。
 
-仕様: specs/api/members/create.md
+仕様: specs/api/members/list.md
 ```
 
 #### Step 2: コード実装依頼
@@ -36,7 +36,7 @@ Issue #**番号** を実装してください。
 ```
 Issue #42 を実装してください。
 
-期待する結果: メンバー登録APIが正常に動作する
+期待する結果: メンバー一覧APIが正常に動作する
 ```
 
 #### Step 3: レビューと修正依頼
@@ -70,9 +70,9 @@ Issue #42 を実装してください。
 Memberテーブルを作成してください
 Memberエンティティを実装してください  
 MemberRepositoryを実装してください
-メンバー登録Serviceを実装してください
-メンバー登録APIを実装してください
-メンバー登録画面を実装してください
+メンバー一覧Serviceを実装してください
+メンバー一覧APIを実装してください
+メンバー一覧画面を実装してください
 ```
 
 ### 🔧 困ったときの魔法の依頼
@@ -141,11 +141,11 @@ specs/SPEC.md を見て、最初に実装すべきIssueを教えてください
 #### ✅ 推奨する粒度（細分化）
 
 ```
-❌ 悪い例: 「メンバー登録機能を実装してください」
+❌ 悪い例: 「メンバー管理機能を実装してください」
 ✅ 良い例: 
-- 「メンバー登録APIのエンドポイントを実装してください」
-- 「メンバー登録画面のUI実装をしてください」  
-- 「メンバー登録APIと画面の連携処理を実装してください」
+- 「メンバー一覧APIのエンドポイントを実装してください」
+- 「メンバー一覧画面のUI実装をしてください」  
+- 「メンバー詳細APIと画面の連携処理を実装してください」
 ```
 
 #### レイヤー別Issue分割例
@@ -156,9 +156,9 @@ specs/SPEC.md を見て、最初に実装すべきIssueを教えてください
 | **ドメイン層** | `[Domain] Memberエンティティの実装` | エンティティ、バリデーション |
 | **リポジトリ層** | `[Repository] MemberRepositoryの実装` | データアクセス処理 |
 | **サービス層** | `[Service] MemberServiceの実装` | ビジネスロジック |
-| **コントローラー層** | `[API] メンバー登録APIの実装` | エンドポイント、リクエスト処理 |
-| **画面層** | `[UI] メンバー登録画面の実装` | HTML、CSS、JavaScript |
-| **統合層** | `[Integration] 登録APIと画面の連携` | フロント・バック連携 |
+| **コントローラー層** | `[API] メンバー一覧APIの実装` | エンドポイント、リクエスト処理 |
+| **画面層** | `[UI] メンバー一覧画面の実装` | HTML、CSS、JavaScript |
+| **統合層** | `[Integration] 一覧APIと画面の連携` | フロント・バック連携 |
 
 ## 開発順序のルール
 
@@ -210,36 +210,37 @@ graph TD
 「メンバーテーブルのDDLを作成するIssueを立ててください。
 
 要件:
-- specs/ui/member-registration.md の項目に基づく
-- id（主キー）、name、email（ユニーク）、address、created_at、updated_at
+- specs/ui/member-list.md の項目に基づく
+- id（主キー）、name、email（ユニーク）、phone、created_at、updated_at
 - PostgreSQL対応
 - インデックスとバリデーション制約も含める」
 ```
 
 #### API層
 ```
-「specs/api/members/create.md に基づいて、メンバー登録APIの実装Issueを作成してください。
+「specs/api/members/list.md に基づいて、メンバー一覧APIの実装Issueを作成してください。
 
 前提:
 - MemberService が既に実装済み
 - データベースとドメイン層は完成
 
 実装範囲:
-- POST /api/members エンドポイント
-- リクエスト・レスポンスのJSON設計
-- バリデーションエラーハンドリング
+- GET /api/members エンドポイント
+- ページング・検索パラメータ対応
+- レスポンスのJSON設計
 - 単体テスト含む」
 ```
 
 #### UI層
 ```
-「specs/ui/member-registration.md の画面実装Issueを立ててください。
+「specs/ui/member-list.md の画面実装Issueを立ててください。
 
 実装内容:
 - Thymeleafテンプレート
-- フォームバリデーション（フロント側）
+- 検索フォーム（名前・メール検索）
+- ページング機能
 - CSSスタイリング（Bootstrap使用）
-- JavaScript（form送信制御）
+- JavaScript（検索・ページング制御）
 
 注意:
 - APIとの連携は別Issueで実装予定」
@@ -251,14 +252,14 @@ graph TD
 ```
 「以下の仕様でMemberServiceクラスを実装してください：
 
-参照仕様: specs/api/members/create.md
+参照仕様: specs/api/members/list.md
 
 実装内容:
-1. createMember(MemberCreateRequest) メソッド
-2. emailの重複チェック
-3. パスワードハッシュ化（BCrypt使用）
-4. バリデーション（Bean Validation）
-5. 例外ハンドリング（DuplicateEmailException）
+1. findAllMembers() メソッド
+2. findMembersByName(String name) メソッド
+3. findMembersByEmail(String email) メソッド
+4. ページング対応（Pageable使用）
+5. 例外ハンドリング（MemberNotFoundException）
 
 技術制約:
 - Spring Boot 3.5.x
@@ -299,7 +300,7 @@ graph TD
 
 ### パフォーマンス改善
 ```
-「メンバーリスト表示が遅い問題を改善してください：
+「メンバー一覧表示が遅い問題を改善してください：
 
 現状: 1000件表示に3秒
 目標: 1秒以内
@@ -388,14 +389,14 @@ graph TD
 ### Q3: 1つの機能を一気に作りたい
 **A:** 一気に作らず、段階的に進めてください：
 ```
-「メンバー登録機能の実装計画を立てて、Issue一覧を作成してください」
+「メンバー一覧機能の実装計画を立てて、Issue一覧を作成してください」
 ```
 
 ### Q4: コードが期待通りに動かない
 **A:** 期待と現実を明確に書いてください：
 ```
-「期待: ユーザー登録後にホーム画面に遷移
-現実: エラー画面が表示される
+「期待: メンバー一覧画面で検索結果が表示される
+現実: 検索しても何も表示されない
 原因を調査して修正してください」
 ```
 
@@ -462,7 +463,7 @@ graph TD
 | **Repository** | `[エンティティ名]Repositoryを実装してください` |
 | **Service** | `[機能名]Serviceを実装してください` |
 | **API** | `[機能名]APIを実装してください` |
-| **画面** | `[画面名]画面を実装してください` |
+| **画面** | `[画面名]を実装してください` |
 | **連携** | `[API名]と[画面名]を連携してください` |
 
 ### 🛠️ トラブルシューティング用

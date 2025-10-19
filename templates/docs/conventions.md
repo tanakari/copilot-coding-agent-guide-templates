@@ -2,7 +2,7 @@
 
 ## 命名
 
-- パッケージ: `com.example.jp.membermap` 形式
+- パッケージ: `com.example.jp.memberlist` 形式
 - クラス: **PascalCase**
 - メソッド/変数: **camelCase**
 

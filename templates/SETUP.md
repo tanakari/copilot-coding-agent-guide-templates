@@ -1,6 +1,6 @@
 # セットアップガイド
 
-このドキュメントでは、Member Map Japan プロジェクトの開発環境をセットアップする手順を説明します。
+このドキュメントでは、メンバー一覧アプリケーションプロジェクトの開発環境をセットアップする手順を説明します。
 
 ## 前提条件
 
@@ -68,9 +68,9 @@ mvn --version
 sudo -u postgres psql
 
 # データベースとユーザーを作成
-CREATE DATABASE member_map_jp;
-CREATE USER member_map_user WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE member_map_jp TO member_map_user;
+CREATE DATABASE member_list_app;
+CREATE USER member_list_user WITH PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE member_list_app TO member_list_user;
 \q
 ```
 
@@ -78,8 +78,8 @@ GRANT ALL PRIVILEGES ON DATABASE member_map_jp TO member_map_user;
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/tanakari/member-map-jp.git
-cd member-map-jp
+git clone https://github.com/tanakari/member-list-app.git
+cd member-list-app
 
 # 環境設定ファイルをコピー
 cp .env.example .env
@@ -93,8 +93,8 @@ cp .env.example .env
 # データベース設定
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=member_map_jp
-DB_USERNAME=member_map_user
+DB_NAME=member_list_app
+DB_USERNAME=member_list_user
 DB_PASSWORD=your_password
 
 # アプリケーション設定

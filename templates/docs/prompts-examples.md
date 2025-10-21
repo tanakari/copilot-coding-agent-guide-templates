@@ -56,7 +56,7 @@ Issue #42 を実装してください。
 
 各レイヤーごとの超シンプル依頼テンプレート：
 
-| レイヤー | ワンライン依頼テンプレート |
+| **レイヤー** | **簡単依頼テンプレート** |
 |----------|-------------------------|
 | **DB** | `**テーブル名**テーブルを作成してください` |
 | **Domain** | `**エンティティ名**エンティティを実装してください` |
@@ -73,6 +73,51 @@ MemberRepositoryを実装してください
 メンバー一覧Serviceを実装してください
 メンバー一覧APIを実装してください
 メンバー一覧画面を実装してください
+```
+
+#### 📊 DB設計関連の依頼例
+
+```
+# DDL生成
+specs/db/database-design.md に基づいて、membersテーブルのCREATE TABLE文を生成してください
+
+# マイグレーション作成  
+membersテーブル用のFlywayマイグレーションファイル（V1__create_members_table.sql）を作成してください
+
+# サンプルデータ生成
+membersテーブル用のサンプルデータINSERT文を10件生成してください。多様な職種・地域を含めてください
+```
+
+#### 🏗️ レイヤー別詳細依頼例
+
+**Database層:**
+```
+specs/db/database-design.md に基づいて、membersテーブルのCREATE TABLE文を生成してください
+```
+
+**Domain層:**
+```
+specs/db/database-design.md のmembersテーブル設計に基づいて、MemberエンティティクラスをJPAアノテーション付きで作成してください
+```
+
+**Repository層:**
+```
+MemberエンティティのJPARepositoryインターフェースを作成してください。基本的なCRUD操作とカスタムクエリメソッドを含めてください
+```
+
+**Service層:**
+```
+specs/api/members/list.md に基づいて、MemberServiceクラスを実装してください。メンバー一覧取得とページング機能を含めてください
+```
+
+**API層:**
+```
+specs/api/members/list.md に基づいて、メンバー一覧取得のRESTエンドポイントを実装してください。MemberControllerクラスを作成してください
+```
+
+**UI層:**
+```
+specs/ui/member-list.md に基づいて、メンバー一覧画面のThymeleafテンプレートを作成してください。検索機能とページング機能も含めてください
 ```
 
 ### 🔧 困ったときの魔法の依頼

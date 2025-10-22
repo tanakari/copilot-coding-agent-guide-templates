@@ -151,41 +151,28 @@ AI駆動開発を効果的に行うためには、AIが理解しやすい形で�
 |1 |README.md |プロジェクト概要とセットアップ手順 |⭐⭐⭐
 |2 |INSTRUCTIONS.md |AIへの指示とルール |⭐⭐⭐
 |3 |SPEC.md |機能仕様の一覧 |⭐⭐⭐
-|4 |.editorconfig |エディタ設定とフォーマット統一 |⭐⭐
-|5 |development-flow.md |開発プロセス |⭐⭐
-|6 |conventions.md |コーディング規約 |⭐⭐
-|7 |architecture.md |アーキテクチャ方針 |⭐⭐
-|8 |policies.md |開発ポリシー |⭐
-|9 |prompts-examples.md |AI依頼例 |⭐
-|10 |agent.md |AI作業契約 |⭐
-|11 |Issueテンプレート |Issue作成フォーマット |⭐⭐
+|4 |PROJECT_STRUCTURE.md |プロジェクト構造の詳細説明 |⭐⭐
+|5 |.editorconfig |エディタ設定とフォーマット統一 |⭐⭐
+|6 |development-flow.md |開発プロセス |⭐⭐
+|7 |conventions.md |コーディング規約 |⭐⭐
+|8 |architecture.md |アーキテクチャ方針 |⭐⭐
+|9 |policies.md |開発ポリシー |⭐
+|10 |prompts-examples.md |AI依頼例 |⭐
+|11 |agent.md |AI作業契約 |⭐
+|12 |Issueテンプレート |Issue作成フォーマット |⭐⭐
 |===
 
-=== ファイル配置先とディレクトリ構造
+=== ファイル配置先
 
-```
-プロジェクトルート/
-├── README.md                    # プロジェクト概要
-├── INSTRUCTIONS.md              # AI指示書
-├── SPEC.md                      # 仕様書
-├── docs/
-│   ├── development-flow.md      # 開発フロー
-│   ├── conventions.md           # コーディング規約
-│   ├── architecture.md          # アーキテクチャ方針
-│   ├── policies.md              # 開発ポリシー
-│   └── prompts-examples.md      # AI依頼例
-├── instructions/
-│   └── agent.md                 # AI作業契約
-├── specs/
-│   ├── ui/
-│   │   └── *.md                 # UI仕様書
-│   └── api/
-│       └── *.md                 # API仕様書
-└── .github/
-    └── ISSUE_TEMPLATE/
-        ├── feature_request.md   # 機能要望テンプレート
-        └── bug_report.md        # バグ報告テンプレート
-```
+各ドキュメントの配置場所は以下の通りです：
+
+- **プロジェクトルート**: README.md, INSTRUCTIONS.md, SPEC.md, PROJECT_STRUCTURE.md, .editorconfig
+- **docs/**: 開発プロセス関連ドキュメント
+- **instructions/**: AI作業契約
+- **specs/**: 仕様書（プロジェクト固有に書き換え前提）
+- **.github/**: GitHubテンプレート
+
+詳細なディレクトリ構造と各ファイルの役割については、link:templates/PROJECT_STRUCTURE.md[PROJECT_STRUCTURE.md] を参照してください。
 
 === 各ドキュメントの作成ガイド
 
@@ -246,6 +233,24 @@ AIエージェントへの指示とプロジェクトルールをまとめた最
 * 各機能の詳細仕様書へのリンク
 * 優先度と実装順序
 * 画面遷移図やAPI仕様の概要
+
+==== PROJECT_STRUCTURE.mdの作成
+
+プロジェクトの具体的なディレクトリ構造とファイル配置ルールを示すリファレンスドキュメントです。
+
+[cols="2,8"]
+|===
+|目的 |実装時の構造リファレンスとAIエージェント向け配置指示
+|配置場所 |プロジェクトルート (`/PROJECT_STRUCTURE.md`)
+|参考テンプレート |link:templates/PROJECT_STRUCTURE.md[PROJECT_STRUCTURE.mdサンプル]
+|===
+
+*含めるべき内容:*
+
+* フェーズ別のディレクトリ構造（ドキュメント→実装→完成）
+* AIエージェント向けファイル配置ルール
+* 実装時のパッケージ構成例
+* クイックリファレンス（よく使うパス一覧）
 
 ==== .editorconfigの作成
 
@@ -563,6 +568,7 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 - INSTRUCTIONS.md  
 - SETUP.md
 - SPEC.md
+- PROJECT_STRUCTURE.md
 - .editorconfig
 
 ### ディレクトリ（全ファイルを含む）

@@ -151,13 +151,14 @@ AI駆動開発を効果的に行うためには、AIが理解しやすい形で�
 |1 |README.md |プロジェクト概要とセットアップ手順 |⭐⭐⭐
 |2 |INSTRUCTIONS.md |AIへの指示とルール |⭐⭐⭐
 |3 |SPEC.md |機能仕様の一覧 |⭐⭐⭐
-|4 |development-flow.md |開発プロセス |⭐⭐
-|5 |conventions.md |コーディング規約 |⭐⭐
-|6 |architecture.md |アーキテクチャ方針 |⭐⭐
-|7 |policies.md |開発ポリシー |⭐
-|8 |prompts-examples.md |AI依頼例 |⭐
-|9 |agent.md |AI作業契約 |⭐
-|10 |Issueテンプレート |Issue作成フォーマット |⭐⭐
+|4 |.editorconfig |エディタ設定とフォーマット統一 |⭐⭐
+|5 |development-flow.md |開発プロセス |⭐⭐
+|6 |conventions.md |コーディング規約 |⭐⭐
+|7 |architecture.md |アーキテクチャ方針 |⭐⭐
+|8 |policies.md |開発ポリシー |⭐
+|9 |prompts-examples.md |AI依頼例 |⭐
+|10 |agent.md |AI作業契約 |⭐
+|11 |Issueテンプレート |Issue作成フォーマット |⭐⭐
 |===
 
 === ファイル配置先とディレクトリ構造
@@ -246,6 +247,50 @@ AIエージェントへの指示とプロジェクトルールをまとめた最
 * 優先度と実装順序
 * 画面遷移図やAPI仕様の概要
 
+==== .editorconfigの作成
+
+エディタ設定とコードフォーマットの統一を行う設定ファイルです。
+
+[cols="2,8"]
+|===
+|目的 |エディタ横断でのコード品質統一とGoogle Java Formatとの併用
+|配置場所 |プロジェクトルート (`/.editorconfig`)
+|参考テンプレート |link:templates/.editorconfig[.editorconfigサンプル]
+|===
+
+*含めるべき内容:*
+
+* 基本設定 (文字エンコーディング、改行コード、最終行)
+* インデント設定 (全言語2スペース統一: Java, JavaScript, HTML, CSS, XML等)
+* 行末スペースの自動削除
+* ファイル形式別の個別設定
+
+
+
+[NOTE]
+====
+*Google Java Format との統合について*
+
+**.editorconfig の役割:**
+* エディタレベルでの基本設定（文字コード、改行、インデント等）
+* 全ファイル形式の共通ルール定義（2スペース統一）
+
+**Google Java Format との統合：**
+* **Google Java Format**: Javaコード専用の詳細フォーマット（括弧位置、スペース配置等）
+* **.editorconfig**: 全言語共通の基本設定（インデント、文字コード、改行等）
+
+**統合効果：**
+* Java: Google Java Format + .editorconfig の基本設定
+* その他すべてのファイル: .editorconfig のみで統一（2スペースインデント）
+
+**推奨開発環境設定：**
+* VS Code: Google Java Format拡張機能 + .editorconfig対応
+* IntelliJ IDEA: Google Java Format Plugin + .editorconfig対応
+* 保存時自動フォーマット設定を有効化
+
+この組み合わせにより、Javaの詳細フォーマットを維持しながら、
+プロジェクト全体で一貫した2スペースインデントを実現できます。
+====
 
 ==== development-flow.mdの作成
 
@@ -280,6 +325,7 @@ Issue作成からマージまでの開発プロセスを定義します。
 * 命名規則 (変数名、関数名、クラス名など)
 * コーディングスタイル (インデント、改行、コメントなど)
 * フォルダ構成とファイル命名ルール
+* コードフォーマット設定 (Google Java Format + .editorconfig)
 
 ==== architecture.mdの作成
 
@@ -517,6 +563,7 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 - INSTRUCTIONS.md  
 - SETUP.md
 - SPEC.md
+- .editorconfig
 
 ### ディレクトリ（全ファイルを含む）
 - docs/

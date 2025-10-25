@@ -7,9 +7,9 @@
 
 ## 🤖 AIエージェントとの開発
 
-### すぐに始められる簡単依頼
+**開発は AI駆動で行います。** 詳細な開発ルールは [`INSTRUCTIONS.md`](./INSTRUCTIONS.md) を参照してください。
 
-AIエージェントに依頼する際は、以下のテンプレートをコピーして使ってください：
+### 📋 基本的な依頼方法
 
 ```
 [機能名]の[レイヤー]を実装するIssueを作成してください。
@@ -17,16 +17,16 @@ AIエージェントに依頼する際は、以下のテンプレートをコピ
 仕様: specs/[ファイルパス]
 ```
 
-**具体例:**
-- `メンバー一覧のAPIを実装するIssueを作成してください。仕様: specs/api/members/list.md`
-- `メンバー一覧画面を実装してください。仕様: specs/ui/member-list.md`
+**例:** `メンバー一覧のAPIを実装してください。仕様: specs/api/members/list.md`
 
-### その他のよく使う依頼
-- `エラーを修正してください：[エラーメッセージ]`
-- `[クラス名]のテストを書いてください`  
-- `何から始めればいいか教えてください`
+### 🔗 AI開発関連ドキュメント
+- **開発指示書**: [`INSTRUCTIONS.md`](./INSTRUCTIONS.md) - AIエージェント向け詳細ルール
+- **依頼例文集**: [`docs/prompts-examples.md`](./docs/prompts-examples.md) - 具体的な依頼方法
+- **AI作業契約**: [`docs/ai/agent.md`](./docs/ai/agent.md) - AIとの協働ルール
 
-👉 **詳しい依頼方法**: [docs/prompts-examples.md](./docs/prompts-examples.md)
+### ⚠️ 重要ルール
+- **PR作成時**: `.github/pull_request_template.md` の**全項目記載必須**
+- **開発前**: 必ず [`INSTRUCTIONS.md`](./INSTRUCTIONS.md) を確認
 
 ## 主な機能
 
@@ -76,7 +76,9 @@ mvn spring-boot:run
 
 ```
 member-management/
-├── .github/              # GitHub設定（Issue/PRテンプレート）
+├── .github/              # GitHub設定
+│   ├── ISSUE_TEMPLATE/  # Issueテンプレート
+│   └── pull_request_template.md  # PRテンプレート
 ├── docs/                 # 各種ドキュメント
 ├── instructions/         # 開発手順書
 ├── specs/                # 仕様書
@@ -88,7 +90,7 @@ member-management/
 │   │   └── resources/   # リソースファイル
 │   └── test/            # テストコード
 ├── pom.xml              # Maven設定ファイル
-├── INSTRUCTIONS.md       # 開発手順書の目次
+├── INSTRUCTIONS.md       # 開発手順書の目次（AI向け指示書）
 ├── SPEC.md              # 仕様書の目次
 ├── SETUP.md             # セットアップガイド
 └── README.md            # このファイル

@@ -1,196 +1,192 @@
-# セットアップガイド
-
-このドキュメントでは、メンバー一覧アプリケーションプロジェクトの開発環境をセットアップする手順を説明します。
+# プロジェクトセットアップガイド
 
 ## 前提条件
 
-開発環境をセットアップする前に、以下の環境が必要です：
+### 必須ツール
+- **Java 21以上** - [OpenJDK](https://openjdk.org/) または [Oracle JDK](https://www.oracle.com/java/)
+- **Maven 3.8以上** - [Apache Maven](https://maven.apache.org/)
+- **Git** - [Git](https://git-scm.com/)
+- **IDE** - IntelliJ IDEA, VS Code, Eclipse等
 
-- Java 25（Temurin推奨）
-- Maven 3.9.x
-- PostgreSQL 15+
-- Git
-- IDE（IntelliJ IDEA、VS Code、Eclipse など）
+### 推奨ツール
+- **Docker** - 統合テスト用データベース
+- **PostgreSQL** - 本番用データベース
 
-## 1. Java 25のインストール
+## セットアップ手順
 
-### Windows
-
-1. [Eclipse Temurin](https://adoptium.net/) から Java 25 をダウンロード
-2. インストーラーを実行してインストール
-3. 環境変数 `JAVA_HOME` を設定
-4. `PATH` に `%JAVA_HOME%\bin` を追加
-
-### macOS
-
-（テンプレートのため、割愛）
-
-### 確認
-
+### 1. リポジトリクローン
 ```bash
-java --version
-javac --version
+git clone [リポジトリURL]
+cd [プロジェクト名]
 ```
 
-## 2. Mavenのインストール
-
-### Windows
-
-1. [Apache Maven](https://maven.apache.org/download.cgi) から最新版をダウンロード
-2. 任意のディレクトリに展開
-3. 環境変数 `MAVEN_HOME` を設定
-4. `PATH` に `%MAVEN_HOME%\bin` を追加
-
-### macOS
-
-（テンプレートのため、割愛）
-
-### 確認
+### 2. 依存関係インストール
 ```bash
-mvn --version
-```
-
-## 3. PostgreSQLのインストール
-
-### Windows
-1. [PostgreSQL公式サイト](https://www.postgresql.org/download/windows/) からインストーラーをダウンロード
-2. インストーラーを実行（デフォルト設定で問題ありません）
-3. パスワードを設定（忘れないようにメモ）
-
-### macOS
-
-（テンプレートのため、割愛）
-
-### データベースの作成
-
-```bash
-# PostgreSQLにログイン
-sudo -u postgres psql
-
-# データベースとユーザーを作成
-CREATE DATABASE member_list_app;
-CREATE USER member_list_user WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE member_list_app TO member_list_user;
-\q
-```
-
-## 4. プロジェクトのクローンと設定
-
-```bash
-# リポジトリをクローン
-git clone https://github.com/tanakari/member-list-app.git
-cd member-list-app
-
-# 環境設定ファイルをコピー
-cp .env.example .env
-```
-
-## 5. 環境設定ファイルの編集
-
-`.env` ファイルを編集して、データベース接続情報を設定します：
-
-```properties
-# データベース設定
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=member_list_app
-DB_USERNAME=member_list_user
-DB_PASSWORD=your_password
-
-# アプリケーション設定
-SERVER_PORT=8080
-SPRING_PROFILES_ACTIVE=development
-
-# ログレベル
-LOGGING_LEVEL_ROOT=INFO
-LOGGING_LEVEL_COM_EXAMPLE=DEBUG
-```
-
-## 6. 依存関係のインストールとアプリケーションの起動
-
-```bash
-# 依存関係をインストール
 mvn clean install
-
-# アプリケーションを起動
-mvn spring-boot:run
 ```
 
-## 7. 動作確認
+### 3. データベース設定
 
-ブラウザで以下のURLにアクセスして、アプリケーションが正常に起動していることを確認します：
+#### 開発環境（H2）
+デフォルトでH2データベースを使用します。特別な設定は不要です。
 
-- メインページ: http://localhost:8080
+#### 本番環境（PostgreSQL）
+```bash
+# PostgreSQL起動（Docker使用の場合）
+docker run -d \
+  --name postgres-dev \
+  -e POSTGRES_DB=memberdb \
+  -e POSTGRES_USER=member \
+  -e POSTGRES_PASSWORD=password \
+  -p 5432:5432 \
+  postgres:15
+
+# 接続確認
+psql -h localhost -U member -d memberdb
+```
+
+### 4. アプリケーション起動
+```bash
+# 開発環境で起動
+mvn spring-boot:run
+
+# または
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+### 5. 動作確認
+- アプリケーション: http://localhost:8080
 - ヘルスチェック: http://localhost:8080/actuator/health
+- H2コンソール: http://localhost:8080/h2-console
 
-## IDE設定
+## 開発環境設定
 
-VS Code を前提とします。
+### IDE設定
 
-1. プロジェクトフォルダを開く
-2. 必要な拡張機能をインストール：
+#### IntelliJ IDEA
+1. **Google Java Format プラグインインストール（推奨）**
+   - File → Settings → Plugins → Google Java Format
+2. **コードスタイル設定**
+   - File → Settings → Editor → Code Style → Java
+   - Scheme: Google Style
+
+#### VS Code
+1. **拡張機能インストール**
+   ```
    - Extension Pack for Java
+   - Google Java Format for VS Code（推奨）
    - Spring Boot Extension Pack
-   - Lombok Annotations Support for VS Code
-3. `.vscode/settings.json` を設定
+   ```
+
+2. **設定（settings.json）**
+   ```json
+   {
+     "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+     "java.format.settings.profile": "GoogleStyle"
+   }
+   ```
+
+## 品質保証設定
+
+### コードフォーマット
+```bash
+# Google Java Format適用（IDE拡張機能推奨）
+# 保存時自動フォーマット推奨
+```
+
+## プロファイル設定
+
+### 開発環境
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+### テスト環境
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=test
+```
+
+### 本番環境
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
+```
 
 ## トラブルシューティング
 
-### ポート競合エラー
+### よくある問題
 
+#### 1. Java バージョンエラー
 ```bash
-# ポート使用状況を確認
-netstat -ano | findstr :8080  # Windows
-lsof -i :8080                 # macOS/Linux
+# Javaバージョン確認
+java -version
+javac -version
 
-# 別のポートを使用する場合は.envファイルでSERVER_PORTを変更
+# JAVA_HOME設定確認
+echo $JAVA_HOME
 ```
 
-### データベース接続エラー
-
-- PostgreSQLサービスが起動しているか確認
-- データベース名、ユーザー名、パスワードが正しいか確認
-- ファイアウォール設定を確認
-
-### Java バージョンエラー
-
+#### 2. Maven依存関係エラー
 ```bash
-# 現在のJavaバージョンを確認
-java --version
+# ローカルリポジトリクリア
+mvn dependency:purge-local-repository
 
-# JAVA_HOME環境変数を確認
-echo $JAVA_HOME  # macOS/Linux
-echo %JAVA_HOME% # Windows
+# 強制再ダウンロード
+mvn clean install -U
 ```
 
-## 開発時の便利なコマンド
-
+#### 3. データベース接続エラー
 ```bash
-# アプリケーションを開発モードで起動（ホットリロード有効）
-mvn spring-boot:run -Dspring-boot.run.profiles=development
+# PostgreSQL接続確認
+pg_isready -h localhost -p 5432
 
-# テストの実行
-mvn test
+# Docker コンテナ確認
+docker ps | grep postgres
+```
 
-# コードフォーマット
-mvn com.coveo:fmt-maven-plugin:format
+#### 4. ポート衝突エラー
+```bash
+# ポート使用状況確認
+lsof -i :8080
+netstat -tulpn | grep :8080
 
-# 静的解析
-mvn checkstyle:check
+# 別ポートで起動
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=8081"
+```
 
-# パッケージの作成
-mvn clean package
+### ログレベル調整
+
+#### application-dev.yml
+```yaml
+logging:
+  level:
+    com.example: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+```
+
+## プロジェクト構造確認
+
+セットアップ完了後、以下の構造になっていることを確認してください：
+
+```
+project-root/
+├── src/
+│   ├── main/java/com/example/
+│   ├── main/resources/
+│   └── test/java/com/example/
+├── docs/               # ドキュメント
+├── .github/           # GitHub設定
+├── pom.xml            # Maven設定
+├── checkstyle.xml     # コーディング規約
+└── README.md          # プロジェクト概要
 ```
 
 ## 次のステップ
 
-セットアップ完了後は、以下のドキュメントを参照してください：
+1. **[INSTRUCTIONS.md](./INSTRUCTIONS.md)** - AI指示とプロジェクトルール確認
+2. **[docs/SPEC.md](./docs/SPEC.md)** - 実装すべき機能の確認
+3. **[docs/development-flow.md](./docs/development-flow.md)** - 開発フロー理解
+4. **GitHub Copilot設定** - コーディングエージェント有効化
 
-- [開発フロー](./docs/development-flow.md) - 開発の進め方
-- [技術スタック](./docs/stack.md) - 使用技術の詳細
-- [アーキテクチャ](./docs/architecture.md) - システム設計
-- [仕様書](./SPEC.md) - 機能仕様
-
-## サポート
-
-セットアップで問題が発生した場合は、GitHubのIssueで報告してください。
+セットアップに関する質問は、IssueまたはDiscussionsでお気軽にお尋ねください。

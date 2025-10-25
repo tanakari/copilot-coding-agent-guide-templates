@@ -8,21 +8,21 @@
 
 | No  | 画面名             | 概要                                   | 仕様書                           |
 | --- | ------------------ | -------------------------------------- | -------------------------------- |
-| 1   | メンバー登録画面   | メンバー情報を登録する画面             | /specs/ui/member-registration.md |
-| 2   | メンバー一覧画面 | 登録したメンバー情報を一覧表示・検索する画面 | /specs/ui/member-list.md         |
+| 1   | メンバー登録画面   | メンバー情報を登録する画面             | specs/ui/member-registration.md |
+| 2   | メンバー一覧画面 | 登録したメンバー情報を一覧表示・検索する画面 | specs/ui/member-list.md         |
 
 ## データベース設計
 
 | No  | 項目                 | 概要                                   | 仕様書                            |
 | --- | -------------------- | -------------------------------------- | --------------------------------- |
-| 1   | データベース設計書   | テーブル設計・ER図・制約事項・Copilot依頼例 | /specs/db/database-design.md     |
+| 1   | データベース設計書   | テーブル設計・ER図・制約事項・Copilot依頼例 | specs/db/database-design.md     |
 
 ## API一覧
 
 | No  | API名          | 概要                                  | 仕様書                       | 実装フェーズ |
 | --- | -------------- | ------------------------------------- | ---------------------------- | ------------ |
-| 1   | メンバー登録   | メンバー情報を登録するAPI             | /specs/api/members/create.md | 第1フェーズ  |
-| 2   | メンバー一覧   | 登録したメンバー情報を一覧表示・検索するAPI | /specs/api/members/list.md   | 第1フェーズ  |
+| 1   | メンバー登録   | メンバー情報を登録するAPI             | specs/api/members/create.md | 第1フェーズ  |
+| 2   | メンバー一覧   | 登録したメンバー情報を一覧表示・検索するAPI | specs/api/members/list.md   | 第1フェーズ  |
 
 ## 非機能要件
 
@@ -32,11 +32,11 @@
 
 ## 参照
 
-- [プロジェクト概要](./README.md)
-- [アーキテクチャ指針](./docs/architecture.md)
-- [注意事項/ポリシー](./docs/policies.md)
-- [AIエージェントへの依頼例](./docs/prompts-examples.md)
-- [開発フロー](./docs/development-flow.md)
-- [命名・コーディング規約](./docs/conventions.md)
-- [技術スタック](./docs/stack.md)
-- [開発手順書目次](./INSTRUCTIONS.md)
+- [プロジェクト概要](../README.md)
+- [アーキテクチャ指針](./architecture.md)
+- [注意事項/ポリシー](./policies.md)
+- [AIエージェントへの依頼例](./prompts-examples.md)
+- [開発フロー](./development-flow.md)
+- [命名・コーディング規約](./conventions.md)
+- [技術スタック](./stack.md)
+- [開発手順書目次](../INSTRUCTIONS.md)

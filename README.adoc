@@ -149,27 +149,30 @@ AI駆動開発を効果的に行うためには、AIが理解しやすい形で�
 |順序 |ドキュメント |目的 |重要度
 
 |1 |README.md |プロジェクト概要とセットアップ手順 |⭐⭐⭐
-|2 |INSTRUCTIONS.md |AIへの指示とルール |⭐⭐⭐
-|3 |SPEC.md |機能仕様の一覧 |⭐⭐⭐
-|4 |PROJECT_STRUCTURE.md |プロジェクト構造の詳細説明 |⭐⭐
-|5 |.editorconfig |エディタ設定とフォーマット統一 |⭐⭐
-|6 |development-flow.md |開発プロセス |⭐⭐
-|7 |conventions.md |コーディング規約 |⭐⭐
-|8 |architecture.md |アーキテクチャ方針 |⭐⭐
-|9 |policies.md |開発ポリシー |⭐
-|10 |prompts-examples.md |AI依頼例 |⭐
-|11 |agent.md |AI作業契約 |⭐
-|12 |Issueテンプレート |Issue作成フォーマット |⭐⭐
+|2 |INSTRUCTIONS.md |AIへの指示とルール（エントリーポイント） |⭐⭐⭐
+|3 |docs/SPEC.md |機能仕様の一覧（仕様書ハブ） |⭐⭐⭐
+|4 |docs/specs/api/ |RESTful API仕様書（実装詳細） |⭐⭐⭐
+|5 |docs/specs/ui/ |画面・UI仕様書（実装詳細） |⭐⭐⭐
+|6 |docs/specs/db/ |データベース設計書（実装詳細） |⭐⭐⭐
+|7 |PROJECT_STRUCTURE.md |プロジェクト構造リファレンス |⭐⭐
+|8 |.github/ |Issue・PR作成フォーマット |⭐⭐
+|9 |.editorconfig |エディタ設定とフォーマット統一 |⭐⭐
+|10 |docs/development-flow.md |開発プロセス |⭐⭐
+|11 |docs/conventions.md |コーディング規約 |⭐⭐
+|12 |docs/architecture.md |アーキテクチャ方針 |⭐⭐
+|13 |docs/policies.md |開発ポリシー |⭐⭐
+|14 |docs/ai/agent.md |AI作業契約（詳細ルール） |⭐
+|15 |docs/prompts-examples.md |AI依頼例（上級者向け） |⭐
 |===
 
 === ファイル配置先
 
 各ドキュメントの配置場所は以下の通りです：
 
-- **プロジェクトルート**: README.md, INSTRUCTIONS.md, SPEC.md, PROJECT_STRUCTURE.md, .editorconfig
-- **docs/**: 開発プロセス関連ドキュメント
-- **instructions/**: AI作業契約
-- **specs/**: 仕様書（プロジェクト固有に書き換え前提）
+- **プロジェクトルート**: README.md, INSTRUCTIONS.md, PROJECT_STRUCTURE.md, SETUP.md, .editorconfig
+- **docs/**: 開発プロセス関連ドキュメント、仕様書、AI関連ドキュメント
+- **docs/specs/**: 仕様書実体（プロジェクト固有に書き換え前提）
+- **docs/ai/**: AI関連ドキュメント統合
 - **.github/**: GitHubテンプレート
 
 詳細なディレクトリ構造と各ファイルの役割については、link:templates/PROJECT_STRUCTURE.md[PROJECT_STRUCTURE.md] を参照してください。
@@ -222,17 +225,98 @@ AIエージェントへの指示とプロジェクトルールをまとめた最
 
 [cols="2,8"]
 |===
-|目的 |機能仕様の概要と詳細仕様書へのリンク
-|配置場所 |プロジェクトルート (`/SPEC.md`)
-|参考テンプレート |link:templates/SPEC.md[SPEC.mdサンプル]
+|目的 |機能仕様の概要と詳細仕様書へのリンク（仕様書ハブ）
+|配置場所 |`/docs/SPEC.md`
+|参考テンプレート |link:templates/docs/SPEC.md[SPEC.mdサンプル]
 |===
 
 *含めるべき内容:*
 
 * 機能一覧と概要
-* 各機能の詳細仕様書へのリンク
+* 各機能の詳細仕様書へのリンク（specs/ 配下）
 * 優先度と実装順序
 * 画面遷移図やAPI仕様の概要
+
+==== docs/specs/ 仕様書の作成
+
+実装の詳細を定義する最重要な仕様書群です。
+
+===== API仕様書 (docs/specs/api/)
+
+[cols="2,8"]
+|===
+|目的 |RESTful API の詳細仕様定義
+|配置場所 |`/docs/specs/api/[リソース名]/[操作名].md`
+|参考テンプレート |link:templates/docs/specs/api/members/[APIテンプレート]
+|===
+
+*含めるべき内容:*
+
+* エンドポイント定義 (URL、HTTPメソッド)
+* リクエスト・レスポンス形式 (JSON例)
+* パラメータ詳細 (必須/任意、バリデーション)
+* エラーレスポンス (ステータスコード、メッセージ)
+* 認証・認可要件
+
+*ファイル例:*
+* `docs/specs/api/members/list.md` - メンバー一覧取得API
+* `docs/specs/api/members/create.md` - メンバー登録API
+
+===== UI仕様書 (docs/specs/ui/)
+
+[cols="2,8"]
+|===
+|目的 |画面・ユーザーインターフェースの詳細仕様定義
+|配置場所 |`/docs/specs/ui/[画面名].md`
+|参考テンプレート |link:templates/docs/specs/ui/[UIテンプレート]
+|===
+
+*含めるべき内容:*
+
+* 画面レイアウト・構成要素
+* 入力フィールドとバリデーション
+* ボタン・リンクの動作仕様
+* 画面遷移・状態変化
+* レスポンシブ対応要件
+
+*ファイル例:*
+* `docs/specs/ui/member-list.md` - メンバー一覧画面
+* `docs/specs/ui/member-registration.md` - メンバー登録画面
+
+===== データベース設計書 (docs/specs/db/)
+
+[cols="2,8"]
+|===
+|目的 |データベース構造とテーブル設計の詳細定義
+|配置場所 |`/docs/specs/db/[設計書名].md`
+|参考テンプレート |link:templates/docs/specs/db/database-design.md[DBテンプレート]
+|===
+
+*含めるべき内容:*
+
+* テーブル定義 (カラム、データ型、制約)
+* 主キー・外部キー関係
+* インデックス設計
+* データ整合性ルール
+* マイグレーション方針
+
+*ファイル例:*
+* `docs/specs/db/database-design.md` - 全体的なDB設計
+
+[IMPORTANT]
+====
+*specs/ ディレクトリの重要性*
+
+これらの仕様書は **AIエージェントが実装時に直接参照する最重要ドキュメント** です：
+
+* **具体性が必要**: 曖昧な表現は避け、実装可能なレベルまで詳細化
+* **整合性の確保**: API・UI・DBの仕様が矛盾しないよう注意
+* **更新の徹底**: 仕様変更時は関連するすべてのファイルを同期更新
+
+**テンプレートからの書き換え前提**
+templates/ の specs/ 配下はサンプル（メンバー管理機能）のため、
+プロジェクト固有の機能仕様に必ず書き換えてください。
+====
 
 ==== PROJECT_STRUCTURE.mdの作成
 
@@ -401,19 +485,20 @@ AIエージェントとの作業契約・責任範囲を明確にします。
 * 作業契約の条件
 * 問題発生時の対応方法
 
-==== Issueテンプレートの作成
+==== GitHubテンプレートの作成
 
-GitHubのIssue作成時に使用するテンプレートを用意します。
+GitHubのIssueとPull Request作成時に使用するテンプレートを用意します。
 
 [cols="2,8"]
-
 |===
-|目的 |Issue作成の標準フォーマットを提供し、情報の一貫性を確保
-|配置場所 |`.github/ISSUE_TEMPLATE/` ディレクトリ
-|参考テンプレート |link:templates/.github/ISSUE_TEMPLATE/[Issueテンプレートサンプル]
+|目的 |Issue・PR作成の標準フォーマットを提供し、情報の一貫性を確保
+|配置場所 |`.github/ISSUE_TEMPLATE/` と `.github/pull_request_template.md`
+|参考テンプレート |link:templates/.github/[GitHubテンプレートサンプル]
 |===
 
 *含めるべき内容:*
+
+**Issueテンプレート:**
 * バグ報告テンプレート
   ** 再現手順
   ** 期待される動作
@@ -424,6 +509,13 @@ GitHubのIssue作成時に使用するテンプレートを用意します。
   ** 利用シナリオ
   ** 期待される効果
   ** 優先度
+
+**PRテンプレート:**
+* 変更内容の概要
+* 関連Issue番号
+* テスト実施状況
+* レビュー観点
+* チェックリスト
 
 ==== ドキュメント作成の注意点
 
@@ -567,15 +659,12 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 - README.md
 - INSTRUCTIONS.md  
 - SETUP.md
-- SPEC.md
 - PROJECT_STRUCTURE.md
 - .editorconfig
 
 ### ディレクトリ（全ファイルを含む）
-- docs/
-- instructions/
-- specs/ （プロジェクト固有の仕様書として書き換え前提）
-- .github/
+- docs/ （仕様書、AI関連ドキュメント含む）
+- .github/ （Issue・PRテンプレート）
 
 ## 実装要件
 
@@ -631,15 +720,19 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 - プロジェクト固有のルール
 - 使用フレームワークの設定
 
-### SPEC.md
+### docs/SPEC.md
 - 実装予定の機能一覧
 - プロジェクト固有の要件
 
-### specs/ ディレクトリ
-- **specs/api/**: API仕様書をプロジェクト固有の内容に書き換え
-- **specs/ui/**: UI仕様書をプロジェクト固有の内容に書き換え
-- **specs/db/**: データベース設計書をプロジェクト固有の内容に書き換え
+### docs/specs/ ディレクトリ
+- **docs/specs/api/**: API仕様書をプロジェクト固有の内容に書き換え
+- **docs/specs/ui/**: UI仕様書をプロジェクト固有の内容に書き換え
+- **docs/specs/db/**: データベース設計書をプロジェクト固有の内容に書き換え
 - テンプレートの「メンバー一覧」例を実際の機能仕様に置き換える
+
+### docs/ai/ ディレクトリ
+- AI関連ドキュメントの中心として整備
+- プロジェクト固有のAI指示を充実
 
 ## 完了条件
 

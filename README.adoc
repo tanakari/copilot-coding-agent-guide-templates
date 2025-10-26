@@ -9,12 +9,47 @@
 
 == はじめに
 
-このドキュメントでは、GitHub Copilot コーディングエージェントを使用したAI駆動開発の手法について説明します。
+このリポジトリは、*GitHub Copilot* と *AI エージェント* を使った効率的なソフトウェア開発のためのテンプレート集とサンプルプロジェクトを提供します。
+
+=== 構成
+
+本リポジトリは以下の2つの構成要素で成り立っています：
+
+==== 📁 template-files（テンプレート）
+* **目的**: 新しいプロジェクト作成時のひな形
+* **内容**: プロジェクトの仕様に関係なくAI駆動開発で必要な基本ファイル
+* **対象**: プロジェクト固有の情報は含まず、汎用的な構造とフォーマット
+
+==== 📁 sample-files（サンプル）  
+* **目的**: AI駆動開発の実践例と学習用リファレンス
+* **内容**: 実際のアプリケーション開発を通じたAI開発プロセス全体の体験
+* **対象**: メンバー管理システムを題材とした具体的な実装例
+
+=== 使い分け
+
+[cols="1,2,2", options="header"]
+|===
+|用途 |template-files |sample-files
+
+|新プロジェクト開始
+|✅ ひな形をコピーして[括弧]部分を編集
+|❌ 参考のみ
+
+|AI開発手法学習
+|❌ 構造のみで内容不足
+|✅ 具体的な仕様で実践的学習
+
+|開発プロセス理解
+|△ 基本的な流れのみ
+|✅ 完全なワークフロー体験
+
+|プロジェクト固有情報
+|⚪ [括弧]表記でプレースホルダ
+|⚪ メンバー管理システムの具体例
+|===
 
 GitHub Copilot コーディングエージェントは、AIを活用してコードの提案・実装を行い、開発者の生産性を大幅に向上させるツールです。
 簡単に言うと、*IssueにCopilotをアサインすると、Copilotが自動的にコードを実装してPull Requestを作成します*。
-
-本リポジトリの `templates/` ディレクトリには、AI駆動開発を始めるために必要なテンプレートファイルとサンプルを配置しています。
 
 [TIP]
 ====
@@ -27,6 +62,102 @@ AI駆動開発では、適切なドキュメント整備がAIの性能を大き�
 * GitHubアカウントを持っていること
 * 基本的なGitの操作知識があること
 * プログラミングの基礎知識があること
+
+== template-filesとsample-filesの使い方
+
+=== 📋 template-filesの使い方
+
+**新しいプロジェクトでAI駆動開発を始める場合** は、`template-files/` を使用してください。
+
+==== Step 1: テンプレートファイルのコピー
+
+```bash
+# 新しいプロジェクトディレクトリ作成
+mkdir your-new-project
+cd your-new-project
+
+# テンプレートファイルをコピー
+cp -r /path/to/template-files/* .
+```
+
+==== Step 2: プロジェクト固有情報の設定
+
+以下のファイルを編集してプロジェクト固有の情報を設定：
+
+[cols="2,3,5", options="header"]
+|===
+|ファイル |設定項目 |説明
+
+|`README.md`
+|プロジェクト名、概要、技術スタック
+|AIが理解するプロジェクト基本情報
+
+|`SETUP.md`
+|環境構築手順、必須ツール
+|開発環境のセットアップガイド
+
+|`specs/`
+|API仕様、UI仕様、DB設計
+|AIが実装に使用する詳細仕様
+
+|`docs/stack.md`
+|技術スタック詳細
+|使用技術の選定理由と制約
+|===
+
+==== Step 3: AI開発開始
+
+1. GitHubリポジトリ作成
+2. ファイルをpush
+3. GitHub Copilot設定
+4. 最初のIssue作成でAI開発開始
+
+=== 🎯 sample-filesの使い方
+
+**AI駆動開発手法を学習したい場合** は、`sample-files/` を使用してください。
+
+==== Step 1: サンプルファイルのクローン
+
+```bash
+# このリポジトリをクローン
+git clone https://github.com/tanakari/copilot-coding-agent-guide-templates.git
+cd copilot-coding-agent-guide-templates/sample-files
+```
+
+==== Step 2: GitHub上での実習
+
+1. **フォーク**: このリポジトリをフォーク
+2. **Copilot設定**: GitHub Copilot有効化
+3. **Issue実習**: `sample-files/` の仕様に従ってIssue作成
+4. **AI開発体験**: CopilotによるAI駆動開発を実際に体験
+
+==== Step 3: 学習ポイント
+
+[cols="2,4,4", options="header"]
+|===
+|段階 |学習内容 |確認ポイント
+
+|Issue作成
+|適切な指示の書き方
+|仕様参照、完了条件、DDD準拠
+
+|AI実装
+|Copilotの作業過程観察
+|コード品質、アーキテクチャ遵守
+
+|レビュー
+|AIコードの評価手法
+|PR テンプレート活用、品質確認
+|===
+
+[TIP]
+====
+*効果的な学習方法*
+
+1. **まずサンプルで体験** → AI開発の全体像を把握
+2. **テンプレートで実践** → 実際のプロジェクトに適用
+3. **継続的改善** → プロジェクトに合わせてテンプレート調整
+====
 
 == 全体フロー
 
@@ -175,7 +306,15 @@ AI駆動開発を効果的に行うためには、AIが理解しやすい形で�
 - **docs/ai/**: AI関連ドキュメント統合
 - **.github/**: GitHubテンプレート
 
-詳細なディレクトリ構造と各ファイルの役割については、link:templates/PROJECT_STRUCTURE.md[PROJECT_STRUCTURE.md] を参照してください。
+詳細なディレクトリ構造と各ファイルの役割については、link:template-files/PROJECT_STRUCTURE.md[PROJECT_STRUCTURE.md] を参照してください。
+
+[NOTE]
+====
+*テンプレートとサンプルの違い*
+
+* **template-files/**: 汎用的なひな形（プロジェクト固有情報は [括弧] で表記）
+* **sample-project/**: 具体的な実装例（メンバー管理システムの完全な仕様）
+====
 
 === 各ドキュメントの作成ガイド
 
@@ -1095,3 +1234,55 @@ flowchart TD
 * 小さな単位でのIssue作成を推奨
 * レビューでは建設的なフィードバックを提供
 ====
+
+== リポジトリ構造
+
+```
+copilot-coding-agent-guide-templates/
+├── README.adoc                    # メインガイド（このファイル）
+├── LICENSE                        # ライセンス
+├── template-files/                # 🎯 新プロジェクト用テンプレート
+│   ├── README.md                 # プロジェクト概要テンプレート
+│   ├── INSTRUCTIONS.md           # AI開発指示書テンプレート
+│   ├── SETUP.md                  # セットアップガイドテンプレート
+│   ├── PROJECT_STRUCTURE.md      # プロジェクト構造定義
+│   ├── .editorconfig            # エディタ設定
+│   ├── .github/                 # GitHubテンプレート
+│   │   └── pull_request_template.md
+│   └── docs/                    # ドキュメントテンプレート
+│       ├── specs/               # 仕様書テンプレート
+│       ├── ai/                  # AI関連ドキュメント
+│       └── *.md                # 開発プロセスドキュメント
+└── sample-files/                # 📚 学習用サンプルプロジェクト
+    ├── README.md               # メンバー管理システム概要
+    ├── README_SAMPLE.md        # サンプル学習ガイド
+    ├── [template-files と同じ構造]
+    └── specs/                  # 具体的な仕様書例
+        ├── api/members/        # メンバーAPI仕様
+        └── ui/                # UI仕様
+```
+
+== 次のステップ
+
+このガイドを完了した後は：
+
+=== 📋 template-files利用の場合
+1. `template-files/` を新プロジェクトにコピー
+2. プロジェクト固有情報を設定（[括弧]の部分を編集）
+3. AI開発開始
+
+=== 🎯 sample-files学習の場合  
+1. `sample-files/README_SAMPLE.md` の実習手順に従って学習
+2. メンバー管理システムの実装を体験
+3. 学習後にtemplate-filesを実プロジェクトに適用
+
+== サポート・フィードバック
+
+* **Issues**: バグ報告や機能要望は https://github.com/tanakari/copilot-coding-agent-guide-templates/issues
+* **Discussions**: 使用方法の質問や改善提案は GitHub Discussions
+* **Pull Requests**: テンプレートの改善提案歓迎
+
+---
+
+**🚀 Happy AI-Driven Development!**
+* レビューでは建設的なフィードバックを提供

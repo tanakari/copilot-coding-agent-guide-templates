@@ -1,4 +1,9 @@
-# プロジェクトセットアップガイド
+# メンバー管理システム セットアップガイド
+
+## 🎯 このサンプルについて
+
+このセットアップガイドは、**メンバー管理システムのサンプルプロジェクト**を実際に動作させるための手順です。
+AI駆動開発の学習用として設計されており、実際のアプリケーション開発プロセス全体を体験できます。
 
 ## 前提条件
 
@@ -14,10 +19,11 @@
 
 ## セットアップ手順
 
-### 1. リポジトリクローン
+### 1. サンプルプロジェクトのフォーク・クローン
 ```bash
-git clone [リポジトリURL]
-cd [プロジェクト名]
+# GitHubでリポジトリをフォーク後
+git clone https://github.com/[YOUR_USERNAME]/copilot-coding-agent-guide-templates.git
+cd copilot-coding-agent-guide-templates/sample-files
 ```
 
 ### 2. 依存関係インストール

@@ -89,7 +89,7 @@ project-root/
 src/main/java/com/example/project/
 ├── Application.java            # メインクラス
 ├── controller/                 # REST API
-├── service/                    # ビジネスロジック
+├── service/                    # アプリケーションサービス（アプリケーションロジック）
 ├── repository/                 # データアクセス
 └── domain/                     # ドメインモデル
 ```

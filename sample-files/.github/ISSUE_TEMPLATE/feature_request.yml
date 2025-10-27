@@ -12,7 +12,7 @@ body:
         - "[DB] データベース層"
         - "[Domain] ドメイン層"
         - "[Repository] リポジトリ層"
-        - "[Service] サービス層"
+        - "[Service] アプリケーションサービス層"
         - "[API] コントローラー層"
         - "[UI] フロントエンド層"
         - "[Integration] 統合・連携層"

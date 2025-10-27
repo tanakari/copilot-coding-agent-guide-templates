@@ -246,15 +246,11 @@ git push origin member-management-trial
 **Copilotチャットで以下のように依頼:**
 
 ```
-メンバーエンティティのIssueを作成してください。
+@workspace メンバーエンティティのIssueを作成してください。
 
-要件:
-- 仕様書: docs/specs/db/database-design.md を参照
-- DDD原則に従ったエンティティクラス
-- JPA annotationを適切に使用
-- バリデーション機能も含める
-
-Issueのタイトルと詳細な説明を作成し、実際にGitHubのIssueとして作成してください。
+**レイヤー**: [Domain] ドメイン層
+**優先度**: High
+**参照仕様**: docs/specs/db/database-design.md
 ```
 
 **Copilotがレスポンスしたら、そのIssueを実際に作成し、再度Copilotにアサインして実装を依頼**
@@ -264,16 +260,12 @@ Issueのタイトルと詳細な説明を作成し、実際にGitHubのIssueと�
 **Copilotチャットで以下のように依頼:**
 
 ```
-次のステップとして、メンバーリポジトリのIssueを作成してください。
+@workspace メンバーリポジトリのIssueを作成してください。
 
-要件:
-- 仕様書: docs/specs/db/database-design.md を参照
-- Spring Data JPAリポジトリパターン
-- DDDのリポジトリ原則に従った実装
-- 基本的なCRUD操作
-- 検索機能（名前、メールアドレス）
-
-先ほど作成したメンバーエンティティと連携する設計でお願いします。
+**レイヤー**: [Repository] リポジトリ層
+**優先度**: Medium
+**参照仕様**: docs/specs/db/database-design.md
+**依存関係**: Memberエンティティ
 ```
 
 ==== 5.3 アプリケーションサービス実装
@@ -281,16 +273,11 @@ Issueのタイトルと詳細な説明を作成し、実際にGitHubのIssueと�
 **Copilotチャットで以下のように依頼:**
 
 ```
-メンバー管理のアプリケーションサービスについて、Issueを作成してください。
+@workspace メンバー管理のアプリケーションサービスのIssueを作成してください。
 
-要件:
-- 仕様書: docs/specs/api/members/list.md と docs/specs/api/members/create.md を参照
-- DDDのアプリケーションサービス原則に従う
-- ビジネスロジックの実装
-- エラーハンドリング
-- トランザクション管理
-
-これまでに作成したエンティティとリポジトリを活用した設計でお願いします。
+**レイヤー**: [Service] アプリケーションサービス層
+**優先度**: High
+**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
 ```
 
 ==== 5.4 API コントローラー実装
@@ -298,13 +285,12 @@ Issueのタイトルと詳細な説明を作成し、実際にGitHubのIssueと�
 **Copilotチャットで以下のように依頼:**
 
 ```
-最後に、REST APIコントローラーのIssueを作成してください。
+@workspace メンバー管理APIコントローラーのIssueを作成してください。
 
-要件:
-- 仕様書: docs/specs/api/members/ 配下のすべてのAPI仕様
-- RESTful設計原則
-- 適切なHTTPステータスコード
-- API ドキュメンテーション（OpenAPI/Swagger）
+**レイヤー**: [API] コントローラー層
+**優先度**: Medium
+**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
+```
 - エラーレスポンスの統一
 
 これまでに作成したアプリケーションサービスを使用した実装でお願いします。

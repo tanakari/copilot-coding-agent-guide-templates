@@ -105,31 +105,46 @@ membersテーブル用のサンプルデータINSERT文を10件生成してく�
 
 **Database層:**
 ```
-specs/db/database-design.md に基づいて、membersテーブルのCREATE TABLE文を生成してください
+**レイヤー**: [DB] データベース層
+**優先度**: High
+**参照仕様**: specs/db/database-design.md
+
+membersテーブルのCREATE TABLE文を生成してください
 ```
 
 **Domain層:**
 ```
-specs/db/database-design.md のmembersテーブル設計に基づいて、MemberエンティティクラスをJPAアノテーション付きで作成してください
+**レイヤー**: [Domain] ドメイン層
+**優先度**: High
+**参照仕様**: specs/db/database-design.md
+
+MemberエンティティクラスをJPAアノテーション付きで作成してください
 ```
 
 **Repository層:**
 ```
+**レイヤー**: [Repository] リポジトリ層
+**優先度**: Medium
+**依存関係**: Memberエンティティ
+
 MemberエンティティのJPARepositoryインターフェースを作成してください。基本的なCRUD操作とカスタムクエリメソッドを含めてください
 ```
 
 #### アプリケーションサービス層
 ```
-メンバー管理のアプリケーションサービスについて、Issueを作成してください。
+メンバー管理のアプリケーションサービス実装のIssueを作成してください。
+
+**レイヤー**: [Service] アプリケーションサービス層
+**優先度**: High
+**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
 
 要件:
-- 仕様書: docs/specs/api/members/list.md と docs/specs/api/members/create.md を参照
 - DDDのアプリケーションサービス原則に従う
-- アプリケーションロジックの実装
-- エラーハンドリング
-- トランザクション管理
+- メンバー登録・一覧取得機能の実装
+- エラーハンドリングとトランザクション管理
+- 既存のMemberエンティティとMemberRepositoryを活用
 
-これまでに作成したエンティティとリポジトリを活用した設計でお願いします。
+GitHub Issueテンプレートとして適切な形式で作成してください。
 ```
 
 **API層:**

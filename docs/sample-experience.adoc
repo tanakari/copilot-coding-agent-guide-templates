@@ -1,0 +1,408 @@
+:toc: left
+:toc-levels: 3
+:toc-title: 目次
+:sectnums:
+:source-highlighter: highlightjs
+:icons: font
+
+= sample-filesを使った実践的AI開発体験
+
+**実際にアプリケーションを動作させながらAI開発を体験したい場合** は、以下の手順でお試しください。
+
+== Step 1: 環境準備
+
+**必要なツール**
+```bash
+# Java 21以上のインストール確認
+java --version
+
+# Maven 3.8以上のインストール確認  
+mvn --version
+
+# Git確認
+git --version
+```
+
+== Step 2: プロジェクト準備
+
+```bash
+# 1. このリポジトリをフォーク（GitHubのWebページで）
+# 2. フォークしたリポジトリをクローン
+git clone https://github.com/[YOUR_USERNAME]/copilot-coding-agent-guide-templates.git
+cd copilot-coding-agent-guide-templates
+
+# 3. 新しいブランチでお試し開始
+git checkout -b member-management-trial
+
+# 4. sample-filesを作業ディレクトリにコピー（隠しファイルも含む）
+cp -r sample-files member-management
+cd member-management
+
+# 5. GitHubテンプレートファイルが正しくコピーされているか確認
+ls -la .github/
+# 以下のファイルが存在することを確認:
+# - pull_request_template.md
+# - ISSUE_TEMPLATE/ ディレクトリ
+```
+
+[NOTE]
+====
+**隠しファイル・ディレクトリのコピーについて**
+
+- **Linux/macOS**: `cp -r` で `.github` ディレクトリも自動的にコピーされます
+- **Windows**: PowerShellの場合は `Copy-Item -Recurse -Force sample-files member-management` を使用
+- **Git Bash (Windows)**: `cp -r` が使用可能
+
+**コピー後の確認が重要:**
+`.github/pull_request_template.md` が存在しない場合は、手動でコピーしてください：
+```bash
+# 手動コピーが必要な場合
+cp -r ../sample-files/.github .
+```
+====
+
+== Step 3: 基本プロジェクト構造の作成
+
+**最初に必要なディレクトリ構造のみ手動で作成:**
+
+```bash
+# Javaプロジェクト構造作成
+mkdir -p src/main/java/com/example/member/management
+mkdir -p src/main/resources
+mkdir -p src/test/java/com/example/member/management
+
+# 変更をコミット
+git add .
+git commit -m "Initial directory structure for member management"
+
+# GitHubにプッシュ
+git push origin member-management-trial
+```
+
+== Step 4: AI開発でプロジェクト設定作成を依頼
+
+**GitHub上で最初のIssue作成（プロジェクト設定 + メインApplicationクラス）:**
+
+```markdown
+タイトル: Spring Bootプロジェクト基盤の作成（Maven設定 + メインクラス）
+
+説明:
+メンバー管理システム用のSpring Bootプロジェクト基盤を作成してください。
+
+参照仕様:
+- docs/stack.md (技術スタック仕様)
+- docs/specs/db/database-design.md (データベース仕様)
+
+作成ファイル:
+1. pom.xml - Maven設定
+2. src/main/resources/application.yml - アプリケーション設定
+3. src/main/java/com/example/member/management/MemberManagementApplication.java - メインクラス
+
+実装要件:
+- Spring Boot 3.3.x以上
+- Java 21対応
+- Spring Data JPA
+- H2データベース（開発用）
+- Web starter
+- テスト用依存関係
+- @SpringBootApplicationアノテーション付きメインクラス
+
+完了条件:
+- [ ] pom.xmlの作成（適切な依存関係設定）
+- [ ] application.ymlの作成（H2データベース設定）
+- [ ] MemberManagementApplicationクラスの作成
+- [ ] mvn clean compileが成功すること
+- [ ] Spring Bootアプリケーションが起動すること
+- [ ] http://localhost:8080 でアクセス可能なこと
+```
+
+**CopilotをIssueにアサイン後、PRが作成されるまで待機**
+
+== Step 5: Copilotチャットで段階的DDD開発体験
+
+**GitHub CopilotチャットでIssue作成から開発まで体験:**
+
+基本プロジェクトが動作したら、GitHub CopilotチャットでIssue作成から実際の開発までを体験します。
+
+[NOTE]
+====
+**@workspace について**
+
+`@workspace` は GitHub Copilot のコンテキスト参照機能です：
+- **効果**: プロジェクト全体のファイル（仕様書、設定、既存コード）を自動的に参照
+- **利点**: 仕様書の内容を理解した上で適切なコードを生成
+- **使用方法**: チャット冒頭に `@workspace` を付けるだけ
+
+例: `@workspace メンバーエンティティのIssueを作成してください`
+====
+
+=== 5.1 メンバーエンティティ開発
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバーエンティティのIssueを作成してください。
+
+**レイヤー**: [Domain] ドメイン層
+**優先度**: High
+**参照仕様**: docs/specs/db/database-design.md
+```
+
+**Copilotがレスポンスしたら、そのIssueを実際に作成し、再度Copilotにアサインして実装を依頼**
+
+=== 5.2 リポジトリ実装
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバーリポジトリのIssueを作成してください。
+
+**レイヤー**: [Repository] リポジトリ層
+**優先度**: Medium
+**参照仕様**: docs/specs/db/database-design.md
+**依存関係**: Memberエンティティ
+```
+
+=== 5.3 アプリケーションサービス実装
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバー管理のアプリケーションサービスのIssueを作成してください。
+
+**レイヤー**: [Service] アプリケーションサービス層
+**優先度**: High
+**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
+```
+
+=== 5.4 API コントローラー実装
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバー管理APIコントローラーのIssueを作成してください。
+
+**レイヤー**: [API] コントローラー層
+**優先度**: Medium
+**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
+```
+
+**実装完了後、APIの動作確認:**
+```bash
+# アプリケーション起動
+mvn spring-boot:run
+
+# APIテスト（別のターミナルで）
+curl -X GET http://localhost:8080/api/members
+curl -X POST http://localhost:8080/api/members -H "Content-Type: application/json" -d '{"name":"田中太郎","email":"tanaka@example.com"}'
+```
+
+=== 5.5 バックエンド開発完了の確認
+
+**これまでの実装で以下が完成しました:**
+
+- ✅ **データベース層**: メンバーテーブル作成
+- ✅ **ドメイン層**: Memberエンティティ実装
+- ✅ **リポジトリ層**: MemberRepository実装  
+- ✅ **アプリケーションサービス層**: MemberService実装
+- ✅ **API層**: メンバー管理REST API実装
+
+**動作確認:**
+```bash
+# アプリケーション起動
+mvn spring-boot:run
+
+# 基本APIテスト
+curl -X GET http://localhost:8080/api/members
+curl -X POST http://localhost:8080/api/members -H "Content-Type: application/json" -d '{"name":"田中太郎","email":"tanaka@example.com"}'
+```
+
+**体験できる機能:**
+- メンバー一覧API (`GET /api/members`)
+- メンバー作成API (`POST /api/members`)  
+- メンバー詳細API (`GET /api/members/{id}`)
+- H2データベースコンソールでのデータ確認
+
+== Step 6: フロントエンド実装
+
+**メンバー管理画面の実装体験:**
+
+=== 6.1 メンバー登録画面の実装
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバー登録画面のIssueを作成してください。
+
+**レイヤー**: [UI] フロントエンド層
+**優先度**: High
+**参照仕様**: docs/specs/ui/member-registration.md
+```
+
+**実装完了後、画面動作を確認:**
+```bash
+# アプリケーション起動
+mvn spring-boot:run
+
+# ブラウザでアクセス
+http://localhost:8080/members/register
+```
+
+=== 6.2 メンバー一覧画面の実装
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバー一覧画面のIssueを作成してください。
+
+**レイヤー**: [UI] フロントエンド層
+**優先度**: High
+**参照仕様**: docs/specs/ui/member-list.md
+```
+
+**実装完了後、画面動作を確認:**
+```bash
+# ブラウザでアクセス
+http://localhost:8080/members/list
+```
+
+== Step 7: フロント・バック連携実装
+
+**API-UI統合の実装体験:**
+
+=== 7.1 メンバー登録機能の統合
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバー登録のAPI-UI連携のIssueを作成してください。
+
+**レイヤー**: [Integration] 統合・連携層
+**優先度**: High
+**機能**: 登録画面からAPIを呼び出してメンバー登録を完成
+```
+
+**統合テスト:**
+1. 登録画面で新しいメンバーを登録
+2. APIが正常に呼び出されることを確認
+3. データベースに登録されることを確認
+
+=== 7.2 メンバー一覧機能の統合
+
+**Copilotチャットで以下のように依頼:**
+
+```
+@workspace メンバー一覧のAPI-UI連携のIssueを作成してください。
+
+**レイヤー**: [Integration] 統合・連携層
+**優先度**: High
+**機能**: 一覧画面でAPIからデータを取得して表示
+```
+
+== Step 8: アプリケーション完成・最終確認
+
+**完全なメンバー管理アプリケーションの動作確認:**
+
+=== 8.1 エンドツーエンドテスト
+
+**以下の一連の操作をテスト:**
+
+```bash
+# 1. アプリケーション起動
+mvn spring-boot:run
+
+# 2. ブラウザで動作確認
+# - メンバー登録: http://localhost:8080/members/register
+# - メンバー一覧: http://localhost:8080/members/list
+# - API直接確認: http://localhost:8080/api/members
+```
+
+**確認項目:**
+- [ ] メンバー登録フォームからデータを送信できる
+- [ ] 登録したメンバーが一覧画面に表示される
+- [ ] APIエンドポイントが正常に動作する
+- [ ] データベースにデータが保存される
+- [ ] エラーハンドリングが適切に動作する
+
+=== 8.2 完成版の振り返り
+
+**AI駆動開発で完成したもの:**
+- ✅ **データベース層**: メンバーテーブル
+- ✅ **ドメイン層**: Memberエンティティ
+- ✅ **リポジトリ層**: MemberRepository
+- ✅ **アプリケーションサービス層**: MemberService
+- ✅ **API層**: メンバー管理REST API
+- ✅ **UI層**: 登録・一覧画面
+- ✅ **統合層**: フロント・バック連携
+
+**体験できたAI開発のポイント:**
+- **@workspace**: プロジェクト全体のコンテキスト活用
+- **段階的実装**: レイヤーごとの分割開発
+- **仕様書連携**: ドキュメント参照による正確な実装
+- **Issue-PR**: 完全なGitHubワークフロー体験
+
+[TIP]
+====
+*完成したアプリケーションの活用*
+
+- **学習継続**: 新しい機能追加でさらなるAI開発体験
+- **カスタマイズ**: プロジェクト要件に合わせて仕様変更
+- **テンプレート化**: 成功パターンを新プロジェクトに適用
+- **チーム共有**: AI駆動開発のノウハウを組織に展開
+====
+
+=== 8.3 開発プロセスの完結（PRテンプレート活用）
+
+**実装完了後の推奨フロー:**
+
+```bash
+# 変更をコミット・プッシュ
+git add .
+git commit -m "feat: 完全なメンバー管理アプリケーション実装"
+git push origin member-management-trial
+```
+
+**GitHub上でPull Request作成時:**
+- GitHubで **Compare & pull request** をクリック
+- PRテンプレートが自動的に表示されます
+- **Copilotを活用した効率的なPR説明生成:**
+
+```
+@workspace .github/pull_request_template.mdテンプレートに従って、このPRの完全な説明を生成してください。レイヤー、テスト結果、チェックリストを含むすべての項目を埋めてください。
+```
+
+これにより、Issue作成から実装、PR作成まで、**完全なAI駆動開発サイクル**を体験できます。
+
+[WARNING]
+====
+*注意事項*
+
+- sample-filesは**学習用**です。本格的なプロジェクトには**template-files**を使用してください
+- 初回は基本構造の手動作成が必要ですが、2回目以降はAIが学習して自動化されます
+- エラーが発生した場合は、AIにフィードバックして修正を依頼してください
+====
+
+== 次のステップ
+
+sample-filesでのAI開発体験が完了したら：
+
+=== 📋 実プロジェクトへの適用
+1. link:template-start.adoc[template-filesを使った新規プロジェクトの開始] で実際のプロジェクトを開始
+2. 体験で学んだAI開発のノウハウを活用
+3. link:../README.adoc#ai駆動開発準備[AI駆動開発準備] を参照してドキュメント整備
+
+=== 🎯 スキル向上  
+1. より複雑な機能の追加に挑戦
+2. 他のプロジェクトでのAI開発実践
+3. チームでのAI駆動開発ワークフロー構築
+
+---
+
+**🚀 Happy AI-Driven Development!**
+
+== 関連リンク
+
+* link:../README.adoc[メインガイドに戻る]
+* link:template-start.adoc[template-files新規プロジェクトガイド]
+* link:../sample-files/README.md[サンプルプロジェクト概要]
+* link:../sample-files/README_SAMPLE.md[サンプル学習ガイド詳細]

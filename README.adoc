@@ -81,338 +81,39 @@ AI駆動開発では、適切なドキュメント整備がAIの性能を大き�
 
 **新しいプロジェクトでAI駆動開発を始める場合** は、`template-files/` を使用してください。
 
-=== Step 1: テンプレートファイルのコピー
+詳細な手順については、link:docs/template-start.adoc[📋 template-files新規プロジェクト開始ガイド] を参照してください。
 
-```bash
-# 新しいプロジェクトディレクトリ作成
-mkdir your-new-project
-cd your-new-project
+**主な手順：**
 
-# テンプレートファイルをコピー
-cp -r /path/to/template-files/* .
-```
-
-=== Step 2: プロジェクト固有情報の設定
-
-以下のファイルを編集してプロジェクト固有の情報を設定：
-
-[cols="2,3,5", options="header"]
-|===
-|ファイル |設定項目 |説明
-
-|`README.md`
-|プロジェクト名、概要、技術スタック
-|AIが理解するプロジェクト基本情報
-
-|`SETUP.md`
-|環境構築手順、必須ツール
-|開発環境のセットアップガイド
-
-|`specs/`
-|API仕様、UI仕様、DB設計
-|AIが実装に使用する詳細仕様
-
-|`docs/stack.md`
-|技術スタック詳細
-|使用技術の選定理由と制約
-|===
-
-=== Step 3: AI開発開始
-
-1. GitHubリポジトリ作成
-2. ファイルをpush
-3. GitHub Copilot設定
-4. 最初のIssue作成でAI開発開始
+1. **テンプレートコピー**: template-files/をプロジェクトにコピー
+2. **プロジェクト固有設定**: [括弧]部分をプロジェクト情報に置き換え
+3. **AI開発開始**: GitHub Copilot設定後、最初のIssue作成
 
 == sample-filesを使った実践的AI開発体験
 
-**実際にアプリケーションを動作させながらAI開発を体験したい場合** は、以下の手順でお試しください。
+**実際にアプリケーションを動作させながらAI開発を体験したい場合** は、メンバー管理システムの完全な実装体験をお試しください。
 
-=== Step 1: 環境準備
+詳細な手順については、link:docs/sample-experience.adoc[🎯 sample-files実践的AI開発体験ガイド] を参照してください。
 
-**必要なツール**
-```bash
-# Java 21以上のインストール確認
-java --version
+**主な体験内容：**
 
-# Maven 3.8以上のインストール確認  
-mvn --version
-
-# Git確認
-git --version
-```
-
-=== Step 2: プロジェクト準備
-
-```bash
-# 1. このリポジトリをフォーク（GitHubのWebページで）
-# 2. フォークしたリポジトリをクローン
-git clone https://github.com/[YOUR_USERNAME]/copilot-coding-agent-guide-templates.git
-cd copilot-coding-agent-guide-templates
-
-# 3. 新しいブランチでお試し開始
-git checkout -b member-management-trial
-
-# 4. sample-filesを作業ディレクトリにコピー（隠しファイルも含む）
-cp -r sample-files member-management
-cd member-management
-
-# 5. GitHubテンプレートファイルが正しくコピーされているか確認
-ls -la .github/
-# 以下のファイルが存在することを確認:
-# - pull_request_template.md
-# - ISSUE_TEMPLATE/ ディレクトリ
-```
-
-[NOTE]
-====
-**隠しファイル・ディレクトリのコピーについて**
-
-- **Linux/macOS**: `cp -r` で `.github` ディレクトリも自動的にコピーされます
-- **Windows**: PowerShellの場合は `Copy-Item -Recurse -Force sample-files member-management` を使用
-- **Git Bash (Windows)**: `cp -r` が使用可能
-
-**コピー後の確認が重要:**
-`.github/pull_request_template.md` が存在しない場合は、手動でコピーしてください：
-```bash
-# 手動コピーが必要な場合
-cp -r ../sample-files/.github .
-```
-====
-
-=== Step 3: 基本プロジェクト構造の作成
-
-**最初に必要なディレクトリ構造のみ手動で作成:**
-
-```bash
-# Javaプロジェクト構造作成
-mkdir -p src/main/java/com/example/member/management
-mkdir -p src/main/resources
-mkdir -p src/test/java/com/example/member/management
-
-# 変更をコミット
-git add .
-git commit -m "Initial directory structure for member management"
-
-# GitHubにプッシュ
-git push origin member-management-trial
-```
-
-=== Step 4: AI開発でプロジェクト設定作成を依頼
-
-**GitHub上で最初のIssue作成（プロジェクト設定 + メインApplicationクラス）:**
-
-```markdown
-タイトル: Spring Bootプロジェクト基盤の作成（Maven設定 + メインクラス）
-
-説明:
-メンバー管理システム用のSpring Bootプロジェクト基盤を作成してください。
-
-参照仕様:
-- docs/stack.md (技術スタック仕様)
-- docs/specs/db/database-design.md (データベース仕様)
-
-作成ファイル:
-1. pom.xml - Maven設定
-2. src/main/resources/application.yml - アプリケーション設定
-3. src/main/java/com/example/member/management/MemberManagementApplication.java - メインクラス
-
-実装要件:
-- Spring Boot 3.3.x以上
-- Java 21対応
-- Spring Data JPA
-- H2データベース（開発用）
-- Web starter
-- テスト用依存関係
-- @SpringBootApplicationアノテーション付きメインクラス
-
-完了条件:
-- [ ] pom.xmlの作成（適切な依存関係設定）
-- [ ] application.ymlの作成（H2データベース設定）
-- [ ] MemberManagementApplicationクラスの作成
-- [ ] mvn clean compileが成功すること
-- [ ] Spring Bootアプリケーションが起動すること
-- [ ] http://localhost:8080 でアクセス可能なこと
-```
-
-**CopilotをIssueにアサイン後、PRが作成されるまで待機**
-
-=== Step 5: Copilotチャットで段階的DDD開発体験
-
-**GitHub CopilotチャットでIssue作成から開発まで体験:**
-
-基本プロジェクトが動作したら、GitHub CopilotチャットでIssue作成から実際の開発までを体験します。
-
-[NOTE]
-====
-**@workspace について**
-
-`@workspace` は GitHub Copilot のコンテキスト参照機能です：
-- **効果**: プロジェクト全体のファイル（仕様書、設定、既存コード）を自動的に参照
-- **利点**: 仕様書の内容を理解した上で適切なコードを生成
-- **使用方法**: チャット冒頭に `@workspace` を付けるだけ
-
-例: `@workspace メンバーエンティティのIssueを作成してください`
-====
-
-==== 5.1 メンバーエンティティ開発
-
-**Copilotチャットで以下のように依頼:**
-
-```
-@workspace メンバーエンティティのIssueを作成してください。
-
-**レイヤー**: [Domain] ドメイン層
-**優先度**: High
-**参照仕様**: docs/specs/db/database-design.md
-```
-
-**Copilotがレスポンスしたら、そのIssueを実際に作成し、再度Copilotにアサインして実装を依頼**
-
-==== 5.2 リポジトリ実装
-
-**Copilotチャットで以下のように依頼:**
-
-```
-@workspace メンバーリポジトリのIssueを作成してください。
-
-**レイヤー**: [Repository] リポジトリ層
-**優先度**: Medium
-**参照仕様**: docs/specs/db/database-design.md
-**依存関係**: Memberエンティティ
-```
-
-==== 5.3 アプリケーションサービス実装
-
-**Copilotチャットで以下のように依頼:**
-
-```
-@workspace メンバー管理のアプリケーションサービスのIssueを作成してください。
-
-**レイヤー**: [Service] アプリケーションサービス層
-**優先度**: High
-**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
-```
-
-==== 5.4 API コントローラー実装
-
-**Copilotチャットで以下のように依頼:**
-
-```
-@workspace メンバー管理APIコントローラーのIssueを作成してください。
-
-**レイヤー**: [API] コントローラー層
-**優先度**: Medium
-**参照仕様**: docs/specs/api/members/list.md、docs/specs/api/members/create.md
-```
-- エラーレスポンスの統一
-
-これまでに作成したアプリケーションサービスを使用した実装でお願いします。
-```
+1. **環境準備**: Java + Maven + Git環境でのプロジェクト開始
+2. **段階的DDD実装**: ドメイン層からUI層まで順次AI開発
+3. **完全なアプリケーション**: メンバー管理システムの動作確認
+4. **AI開発ワークフロー**: Issue作成からPR完了まで完全体験
 
 [TIP]
 ====
-**@workspace 活用のコツ**
+**学習効果を最大化するために**
 
-- **最初は@workspaceなし**: シンプルな依頼から始める
-- **詳細が必要な時**: `@workspace` を付けてプロジェクト全体を参照
-- **段階的レベルアップ**: 慣れてきたら `@workspace` で効率化
-
-**レベル別使い分け:**
-- **初心者**: `メンバーエンティティのIssueを作成してください`  
-- **中級者**: `@workspace メンバーエンティティのIssueを作成してください`
-- **上級者**: `@workspace` + 詳細な技術要件を組み合わせ
+sample-filesでの実践体験後、学んだ手法をlink:docs/template-start.adoc[template-files] で実際のプロジェクトに適用することで、AI駆動開発のスキルを定着させられます。
 ====
 
-==== 5.5 開発フロー体験
-
-各ステップで以下の流れを体験します：
-
-```mermaid
-flowchart LR
-    A[Copilotチャット相談] --> B[Issue作成依頼]
-    B --> C[Issue作成]
-    C --> D[Copilotアサイン]
-    D --> E[自動実装]
-    E --> F[PR作成]
-    F --> G[レビュー]
-    G --> H[マージ]
-    H --> I[次の機能へ]
-```
-
-=== Step 6: アプリケーション動作確認
-
-```bash
-# アプリケーション起動
-mvn spring-boot:run
-
-# ブラウザでアクセス
-# http://localhost:8080/api/members
-# http://localhost:8080/h2-console (データベース確認)
-```
-
-**体験できる機能:**
-- メンバー一覧API (`GET /api/members`)
-- メンバー作成API (`POST /api/members`)  
-- メンバー詳細API (`GET /api/members/{id}`)
-- H2データベースコンソールでのデータ確認
-
-=== Step 7: PRテンプレートの動作確認
-
-**GitHub上でPull Requestテンプレートが正しく機能するか確認:**
-
-1. **変更をコミット・プッシュ**
-```bash
-git add .
-git commit -m "test: PRテンプレート動作確認"
-git push origin member-management-trial
-```
-
-2. **Pull Request作成**
-- GitHubで **Compare & pull request** をクリック
-- PRテンプレートが自動的に表示されることを確認
-- 以下のセクションが含まれている必要があります：
-  - 概要
-  - 関連Issue  
-  - 実装内容
-  - テスト
-  - チェックリスト
-
-3. **PRテンプレートが表示されない場合**
-```bash
-# .githubディレクトリの確認
-ls -la .github/
-# pull_request_template.md が存在しない場合は手動でコピー
-cp ../sample-files/.github/pull_request_template.md .github/
-git add .github/pull_request_template.md
-git commit -m "add: PRテンプレートを追加"
-git push origin member-management-trial
-```
-
-[TIP]
-====
-*AI駆動開発体験のコツ*
-
-- **Copilotチャット**: Issue作成から実装指示まで自然な会話で依頼
-- **段階的開発**: 一度に全て作らず、レイヤーごとに分けて開発
-- **仕様書参照**: `@workspace` でプロジェクト全体の文脈を活用
-- **継続学習**: 各ステップでCopilotがプロジェクトを学習していく過程を体験
-====
-
-[WARNING]
-====
-*注意事項*
-
-- sample-filesは**学習用**です。本格的なプロジェクトには**template-files**を使用してください
-- 初回は基本構造の手動作成が必要ですが、2回目以降はAIが学習して自動化されます
-- エラーが発生した場合は、AIにフィードバックして修正を依頼してください
-====
-
-== 利用設定
+== GitHub Copilotの利用準備
 
 === GitHub Copilotのサブスクリプション登録
 
-GitHub Copilot コーディングエージェントを使用するには、*Copilot コーディングエージェント*が利用可能なプランに登録する必要があります。
+GitHub Copilot コーディングエージェントを使用するには、 *Copilot コーディングエージェント* が利用可能なプランに登録する必要があります。
 本ガイドでは *Copilot Pro* を利用します。
 
 ==== 登録手順
@@ -629,6 +330,7 @@ AIエージェントへの指示とプロジェクトルールをまとめた最
 * 認証・認可要件
 
 *ファイル例:*
+
 * `docs/specs/api/members/list.md` - メンバー一覧取得API
 * `docs/specs/api/members/create.md` - メンバー登録API
 
@@ -650,6 +352,7 @@ AIエージェントへの指示とプロジェクトルールをまとめた最
 * レスポンシブ対応要件
 
 *ファイル例:*
+
 * `docs/specs/ui/member-list.md` - メンバー一覧画面
 * `docs/specs/ui/member-registration.md` - メンバー登録画面
 
@@ -671,6 +374,7 @@ AIエージェントへの指示とプロジェクトルールをまとめた最
 * マイグレーション方針
 
 *ファイル例:*
+
 * `docs/specs/db/database-design.md` - 全体的なDB設計
 
 [IMPORTANT]
@@ -731,18 +435,22 @@ templates/ の specs/ 配下はサンプル（メンバー管理機能）のた�
 *Google Java Format との統合について*
 
 **.editorconfig の役割:**
+
 * エディタレベルでの基本設定（文字コード、改行、インデント等）
 * 全ファイル形式の共通ルール定義（2スペース統一）
 
 **Google Java Format との統合：**
+
 * **Google Java Format**: Javaコード専用の詳細フォーマット（括弧位置、スペース配置等）
 * **.editorconfig**: 全言語共通の基本設定（インデント、文字コード、改行等）
 
 **統合効果：**
+
 * Java: Google Java Format + .editorconfig の基本設定
 * その他すべてのファイル: .editorconfig のみで統一（2スペースインデント）
 
 **推奨開発環境設定：**
+
 * VS Code: Google Java Format拡張機能 + .editorconfig対応
 * IntelliJ IDEA: Google Java Format Plugin + .editorconfig対応
 * 保存時自動フォーマット設定を有効化
@@ -763,6 +471,7 @@ Issue作成からマージまでの開発プロセスを定義します。
 |===
 
 *含めるべき内容:*
+
 * Issueの作成と管理方法
 * Copilotのアサイン方法
 * コード実装とPR作成の手順
@@ -869,6 +578,7 @@ GitHubのIssueとPull Request作成時に使用するテンプレートを用意
 *含めるべき内容:*
 
 **Issueテンプレート:**
+
 * バグ報告テンプレート
   ** 再現手順
   ** 期待される動作
@@ -881,6 +591,7 @@ GitHubのIssueとPull Request作成時に使用するテンプレートを用意
   ** 優先度
 
 **PRテンプレート:**
+
 * 変更内容の概要
 * 関連Issue番号
 * テスト実施状況
@@ -940,6 +651,18 @@ flowchart TD
     G -->|No| J[開発者: PRマージ]
     J --> K[完了]
 ```
+
+==== GitHub リポジトリ作成手順
+
+[cols="1,9"]
+|===
+|手順 |操作内容
+
+|1
+|*新規リポジトリ作成* +
+GitHub右上の *+* → *New repository*
+
+|2
 |*リポジトリ設定* +
 - Repository name: プロジェクト名を入力
 - Description: プロジェクトの概要を記載
@@ -996,11 +719,13 @@ GitHub右上のプロフィールアイコン → *Settings*
 以下の内容でIssueを作成してください：
 
 **タイトル:**
+
 ```
 AI駆動開発テンプレートファイルの導入
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 tanakari/copilot-coding-agent-guide-templates リポジトリの templates ディレクトリから以下のファイルを取得して、このリポジトリのルートに配置してください：
@@ -1008,6 +733,7 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 ## 取得するファイル・ディレクトリ
 
 ### 必須ファイル
+
 - README.md
 - INSTRUCTIONS.md  
 - SETUP.md
@@ -1015,6 +741,7 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 - .editorconfig
 
 ### ディレクトリ（全ファイルを含む）
+
 - docs/ （仕様書、AI関連ドキュメント含む）
 - .github/ （Issue・PRテンプレート）
 
@@ -1042,11 +769,13 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 テンプレート導入完了後、新しいIssueでプロジェクト固有情報を更新します：
 
 **タイトル:**
+
 ```
 プロジェクト固有情報への更新
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 導入されたテンプレートファイルをプロジェクト固有の情報に更新してください：
@@ -1102,11 +831,13 @@ tanakari/copilot-coding-agent-guide-templates リポジトリの templates デ�
 ==== Issue 1: プロジェクト基盤設定の作成
 
 **タイトル:**
+
 ```
 プロジェクト基盤設定ファイルの作成（インフラ層）
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 INSTRUCTIONS.md に記載された技術スタックに基づいて、プロジェクトの基盤設定ファイルを作成してください。
@@ -1119,6 +850,7 @@ INSTRUCTIONS.md に記載された技術スタックに基づいて、プロジ�
 - 基本的なディレクトリ構造（DDD準拠）
 
 ## ディレクトリ構造
+
 ```
 src/main/java/com/example/project/
 ├── Application.java        # メインクラス
@@ -1185,11 +917,13 @@ specs/db/database-design.md の設計に基づいて、ドメイン層の基本�
 ==== Issue 3: インフラストラクチャ層の実装
 
 **タイトル:**
+
 ```
 インフラストラクチャ層の実装（リポジトリ・データベース）
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 ドメイン層で定義されたリポジトリインターフェースの実装と、データベーステーブルを作成してください。
@@ -1225,11 +959,13 @@ specs/db/database-design.md の設計に基づいて、ドメイン層の基本�
 ==== Issue 4: アプリケーション層の実装
 
 **タイトル:**
+
 ```
 アプリケーション層の実装（ユースケース・サービス）
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 specs/api/ の仕様に基づいて、アプリケーション層のサービスクラスを実装してください。
@@ -1266,11 +1002,13 @@ specs/api/ の仕様に基づいて、アプリケーション層のサービス
 ==== Issue 5: プレゼンテーション層の実装
 
 **タイトル:**
+
 ```
 プレゼンテーション層の実装（REST API・コントローラー）
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 specs/api/ の仕様に基づいて、RESTful APIのエンドポイントを実装してください。
@@ -1307,11 +1045,13 @@ specs/api/ の仕様に基づいて、RESTful APIのエンドポイントを実�
 ==== Issue 6: 統合テスト・E2Eテストの実装
 
 **タイトル:**
+
 ```
 統合テスト・E2Eテストの実装
 ```
 
 **本文:**
+
 [source,markdown]
 ----
 全レイヤーが連携した統合テストとエンドツーエンドテストを実装してください。
@@ -1479,15 +1219,15 @@ copilot-coding-agent-guide-templates/
 
 このガイドを完了した後は：
 
+=== 🎯 sample-files学習の場合  
+1. link:docs/sample-experience.adoc[sample-files実践的AI開発体験ガイド] で完全な開発サイクルを体験
+2. メンバー管理システムの実装を通じてAI開発手法を習得
+3. 学習後にtemplate-filesを実プロジェクトに適用
+
 === 📋 template-files利用の場合
-1. `template-files/` を新プロジェクトにコピー
+1. link:docs/template-start.adoc[template-files新規プロジェクト開始ガイド] の詳細手順に従って実装
 2. プロジェクト固有情報を設定（[括弧]の部分を編集）
 3. AI開発開始
-
-=== 🎯 sample-files学習の場合  
-1. `sample-files/README_SAMPLE.md` の実習手順に従って学習
-2. メンバー管理システムの実装を体験
-3. 学習後にtemplate-filesを実プロジェクトに適用
 
 == サポート・フィードバック
 
@@ -1498,4 +1238,3 @@ copilot-coding-agent-guide-templates/
 ---
 
 **🚀 Happy AI-Driven Development!**
-* レビューでは建設的なフィードバックを提供

@@ -1,0 +1,76 @@
+:toc: left
+:toc-levels: 3
+:toc-title: 目次
+:sectnums:
+:source-highlighter: highlightjs
+:icons: font
+
+= template-filesを使った新規プロジェクトの開始
+
+**新しいプロジェクトでAI駆動開発を始める場合** は、`template-files/` を使用してください。
+
+== Step 1: テンプレートファイルのコピー
+
+```bash
+# 新しいプロジェクトディレクトリ作成
+mkdir your-new-project
+cd your-new-project
+
+# テンプレートファイルをコピー
+cp -r /path/to/template-files/* .
+```
+
+== Step 2: プロジェクト固有情報の設定
+
+以下のファイルを編集してプロジェクト固有の情報を設定：
+
+[cols="2,3,5", options="header"]
+|===
+|ファイル |設定項目 |説明
+
+|`README.md`
+|プロジェクト名、概要、技術スタック
+|AIが理解するプロジェクト基本情報
+
+|`SETUP.md`
+|環境構築手順、必須ツール
+|開発環境のセットアップガイド
+
+|`specs/`
+|API仕様、UI仕様、DB設計
+|AIが実装に使用する詳細仕様
+
+|`docs/stack.md`
+|技術スタック詳細
+|使用技術の選定理由と制約
+|===
+
+== Step 3: AI開発開始
+
+1. GitHubリポジトリ作成
+2. ファイルをpush
+3. GitHub Copilot設定
+4. 最初のIssue作成でAI開発開始
+
+== 次のステップ
+
+template-filesを使った初期設定が完了したら：
+
+=== 📋 継続的AI開発
+1. 設定したファイル構成でプロジェクトを進行
+2. link:../README.adoc#ai駆動開発の実践[AI駆動開発の実践] を参照して本格的な開発を開始
+3. link:../README.adoc#環境構築とテンプレート構成[環境構築] の手順に従ってGitHub Copilotを設定
+
+=== 🎯 学習目的の場合
+実際のAI開発プロセスを体験したい場合は、link:sample-experience.adoc[sample-filesを使った実践的AI開発体験] を参照してください。
+
+---
+
+**🚀 Happy AI-Driven Development!**
+
+== 関連リンク
+
+* link:../README.adoc[メインガイドに戻る]
+* link:sample-experience.adoc[sample-files実践体験ガイド]
+* link:../template-files/README.md[テンプレートファイル構造]
+* link:../template-files/INSTRUCTIONS.md[AI開発指示書テンプレート]

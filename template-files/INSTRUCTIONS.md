@@ -25,6 +25,7 @@ Copilot や AI エージェント／開発者が迷わず作業できるよう�
 - **Pull Request作成**: 必ず[PRテンプレート](`.github/pull_request_template.md`)を完全に記載してください
 - 命名・コーディング規約: [`docs/conventions.md`](./docs/conventions.md)
 - アーキテクチャ指針: [`docs/architecture.md`](./docs/architecture.md)
+- DDD実装ガイドライン: [`docs/implementation-guide.md`](./docs/implementation-guide.md)
 - 注意事項/ポリシー: [`docs/policies.md`](./docs/policies.md)
 - AIエージェントへの依頼例: [`docs/prompts-examples.md`](./docs/prompts-examples.md)
 

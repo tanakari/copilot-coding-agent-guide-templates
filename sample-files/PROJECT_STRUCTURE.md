@@ -51,6 +51,7 @@ project-root/
 - `docs/development-flow.md` - Issue→PR→マージのワークフロー
 - `docs/conventions.md` - 命名規則・フォーマット
 - `docs/architecture.md` - システム設計・パターン
+- `docs/implementation-guide.md` - DDD実装ガイドライン
 - `docs/policies.md` - セキュリティ・品質管理
 - `docs/prompts-examples.md` - AI指示の例文集
 - `docs/stack.md` - 技術選定理由

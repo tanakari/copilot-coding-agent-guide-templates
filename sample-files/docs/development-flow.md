@@ -2,15 +2,15 @@
 
 ## 基本原則
 
-- **1機能 = 複数Issue** （レイヤー別に分割）
-- **1Issue = 1レイヤー = 1PR** 
+- **1機能 = 複数Issue** （DDD層別に分割）
+- **1Issue = 1アーキテクチャ層 = 1PR** 
 - **開発順序**: ボトムアップ（DB → Domain → Repository → Service → API → UI → Integration）
 
 ## Issue作成フロー
 
 ### 1. 機能分析とIssue分割
 
-新機能実装時は、まず **レイヤー別にIssueを分割** します。
+新機能実装時は、まず **DDD層別にIssueを分割** します。
 
 **例：メンバー登録機能の場合**
 ```
@@ -31,12 +31,12 @@
    - 関連する仕様書（SPEC.md）
    - 分割予定のIssue一覧
 
-2. **レイヤー別Issue作成** （開発順序に従って）
+2. **DDD層別Issue作成** （開発順序に従って）
    - Issueテンプレートを活用
      - 機能実装：.github/ISSUE_TEMPLATE/feature_request.yml
      - バグ修正：.github/ISSUE_TEMPLATE/bug_report.yml
    - 各Issueに以下を明記：
-     - 実装対象レイヤー（[DB], [Domain], [Repository]等）
+     - 実装対象層（[DB], [Domain], [Repository]等）
      - 前提となる依存Issue
      - 関連する仕様書
      - 完了条件（Definition of Done）
@@ -44,7 +44,7 @@
 ### 3. Issue内容の必須項目
 
 #### 基本情報
-- **レイヤーラベル**: [DB], [Domain], [Repository], [Service], [API], [UI], [Integration]
+- **DDD層ラベル**: [DB], [Domain], [Repository], [Service], [API], [UI], [Integration]
 - **優先度**: High/Medium/Low
 
 #### 依存関係
@@ -150,7 +150,7 @@ feature/006-ui-member-registration
 
 ### Issue粒度が大きすぎる場合
 - **分割基準**: 1つのPRが200行を超える見込みの場合は分割
-- **再分割**: より細かいレイヤー・機能単位で分割
+- **再分割**: より細かいDDD層・機能単位で分割
 
 ### 依存関係でブロックされる場合
 - **並行開発**: 独立した機能は並行実装可能
